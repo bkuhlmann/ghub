@@ -10,5 +10,6 @@ module Ghub
 
     register(:configuration, memoize: true) { Configuration::Loader.new.call }
     register(:http) { HTTP }
+    register(:client) { API::Client.new }
   end
 end
