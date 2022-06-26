@@ -8,6 +8,7 @@ module Ghub
   module Container
     extend Dry::Container::Mixin
 
+    register(:configuration, memoize: true) { Configuration::Loader.new.call }
     register(:http) { HTTP }
   end
 end
