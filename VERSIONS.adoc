@@ -1,0 +1,27 @@
+= Versions
+
+== 0.0.0 (2022-10-20)
+
+* Added API client - Brooke Kuhlmann
+* Added API page - Brooke Kuhlmann
+* Added Dry gems to gem boot - Brooke Kuhlmann
+* Added application container - Brooke Kuhlmann
+* Added application import - Brooke Kuhlmann
+* Added branch protection endpoint - Brooke Kuhlmann
+* Added branch signature endpoint - Brooke Kuhlmann
+* Added configuration content - Brooke Kuhlmann
+* Added configuration loader - Brooke Kuhlmann
+* Added custom code quality configurations - Brooke Kuhlmann
+* Added documentation - Brooke Kuhlmann
+* Added endpoints container - Brooke Kuhlmann
+* Added endpoints import - Brooke Kuhlmann
+* Added gem dependencies - Brooke Kuhlmann
+* Added generic models - Brooke Kuhlmann
+* Added generic responses - Brooke Kuhlmann
+* Added organization members endpoint - Brooke Kuhlmann
+* Added primary client - Brooke Kuhlmann
+* Added project skeleton - Brooke Kuhlmann
+* Added pulls endpoint - Brooke Kuhlmann
+* Added repositories endpoint - Brooke Kuhlmann
+* Added resultable module - Brooke Kuhlmann
+* Added users endpoint - Brooke Kuhlmann
