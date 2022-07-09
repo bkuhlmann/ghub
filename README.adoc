@@ -4,15 +4,20 @@
 
 = Ghub
 
+Ghub is portmanteau (i.e. [g]it + hub = ghub) that provides a GitHub link:https://docs.github.com/en/rest[API] client using a design which leverages link:https://www.alchemists.io/articles/ruby_function_composition[function composition] and link:https://dry-rb.org/gems/dry-monads[monads]. This gem is built upon the link:https://github.com/httprb/http[HTTP] gem instead of link:https://lostisland.github.io/faraday[Faraday] which is what the link:https://github.com/octokit/octokit.rb[Octokit] gem uses.
+
 toc::[]
 
 == Features
 
-== Screencasts
+* Provides an API client which is a partial implementation of GitHub's link:https://docs.github.com/en/rest[API].
+* Provides HTTP request and response verification using link:https://dry-rb.org/gems/dry-schema[Dry Schema].
+* Uses link:https://www.alchemists.io/articles/ruby_function_composition[Function Composition] -- coupled with link:https://www.alchemists.io/projects/transactable[Transactable] -- to process each HTTP request and response.
 
 == Requirements
 
 . link:https://www.ruby-lang.org[Ruby].
+. link:https://github.com[GitHub].
 
 == Setup
 
@@ -25,7 +30,139 @@ bin/setup
 
 == Usage
 
+All usage is via the `Ghub::Client` class.
+
+=== Initialization
+
+You can initialize an API client -- using the defaults as described in the _Environment_ section below -- as follows:
+
+[source,ruby]
+----
+client = Ghub::Client.new
+----
+
+Further customization can be done via a block:
+
+[source,ruby]
+----
+client = Ghub::Client.new do |config|
+  config.accept = "application/json"     # Uses a custom HTTP Accept header.
+  config.paginate = true                 # Enabled automatic pagination.
+  config.token = "ghp_abc"               # Provides a Personal Access Token (PAT).
+  config.url = "https://alt.github.com"  # Uses a custom API root.
+end
+----
+
+=== Environment
+
+Environment variable support can be managed using link:https://direnv.net[direnv]. These are the defaults:
+
+[source,bash]
+----
+GITHUB_API_ACCEPT=application/vnd.github+json
+GITHUB_API_PAGINATE=false
+GITHUB_API_TOKEN=
+GITHUB_API_URL=https://api.github.com
+----
+
+_You must provide a value for `GITHUB_API_TOKEN` in order to make authenticated API requests._ This can be done by creating a link:https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/creating-a-personal-access-token[Personal Access Token (PAT)] for the value.
+
+=== Endpoints
+
+Only partial support of the various API endpoints are supported. Each section below documents usage with additional documentation, usage, parameters, responses, etc. provided by the official GitHub API documentation links.
+
+==== Branch Protection
+
+The following is an example of how to link:https://docs.github.com/en/rest/branches/branch-protection#get-branch-protection[show], link:https://docs.github.com/en/rest/branches/branch-protection#update-branch-protection[update], and link:https://docs.github.com/en/rest/branches/branch-protection#delete-branch-protection[destroy] branch protection:
+
+[source,ruby]
+----
+client.branch_protection.show "<owner>", "<repository>", "<branch>"
+client.branch_protection.update "<owner>", "<repository>", "<branch>", {}
+client.branch_protection.destroy "<owner>", "<repository>", "<branch>"
+----
+
+==== Branch Signature
+
+The following is an example of how to link:https://docs.github.com/en/rest/branches/branch-protection#get-commit-signature-protection[show], link:https://docs.github.com/en/rest/branches/branch-protection#create-commit-signature-protection[create], and link:https://docs.github.com/en/rest/branches/branch-protection#delete-commit-signature-protection[destroy] branch signature protection:
+
+[source,ruby]
+----
+client.branch_signature.show "<owner>", "<repository>", "<branch>"
+client.branch_signature.create "<owner>", "<repository>", "<branch>"
+client.branch_signature.destroy "<owner>", "<repository>", "<branch>"
+----
+
+==== Organization Members
+
+The following is how to link:https://docs.github.com/en/rest/orgs/members#list-organization-members[index] organization members.
+
+[source,ruby]
+----
+client.organization_members.index "<owner>"
+----
+
+==== Pulls
+
+The following is how to link:https://docs.github.com/en/rest/pulls/pulls#list-pull-requests[index] and link:https://docs.github.com/en/rest/pulls/pulls#get-a-pull-request[show] pull requests:
+
+[source,ruby]
+----
+client.pulls.index "<owner>", "<repository>"
+client.pulls.show "<owner>", "<repository>", <id>
+----
+
+==== Repositories
+
+The following documents how to interact with repositories:
+
+* link:https://docs.github.com/en/rest/repos/repos#list-repositories-for-a-user[Index] (users)
+* link:https://docs.github.com/en/rest/repos/repos#list-organization-repositories[Index] (organizations)
+* link:https://docs.github.com/en/rest/repos/repos#get-a-repository[Show]
+* link:https://docs.github.com/en/rest/repos/repos#create-a-repository-for-the-authenticated-user[Create] (user)
+* link:https://docs.github.com/en/rest/repos/repos#create-an-organization-repository[Create] (organization)
+* link:https://docs.github.com/en/rest/repos/repos#update-a-repository[Update]
+* link:https://docs.github.com/en/rest/repos/repos#delete-a-repository[Destroy]
+
+[source,ruby]
+----
+client.repositories.index "<owner>", "<repository>"
+client.repositories.show "<owner>", "<repository>"
+
+# For a user.
+# Example: client.repositories.create :users, {name: "ghub-test", private: true}
+client.repositories.create :users, <attributes>
+
+# For an organization.
+# Example: client.repositories.create :orgs, {name: "ghub-test", private: true}, owner: "acme"
+client.repositories.create :orgs, <attributes>, owner: "<organization>"
+
+client.repositories.patch "<owner>", {description: "For test only."}
+client.repositories.destroy "<owner>", <id>
+----
+
+GitHub's API design for repositories is awkward and you can see this infect the Object API, especially when creating a repository. Use `:users` or `:orgs` (can be strings) to distinguish between the two types of repository creation. The only stipulation for organization creation is that you must supply the organization name. This was done so you could use the same Object API for both.
+
+==== Users
+
+The following is how to link:https://docs.github.com/en/rest/users/users#list-users[index] and link:https://docs.github.com/en/rest/users/users#get-a-user[show] users:
+
+[source,ruby]
+----
+client.users.index
+client.users.show "<user>"
+----
+
 == Development
+
+To contribute, run:
+
+[source,bash]
+----
+git clone https://github.com/bkuhlmann/ghub
+cd ghub
+bin/setup
+----
 
 You can also use the IRB console for direct access to all objects:
 
