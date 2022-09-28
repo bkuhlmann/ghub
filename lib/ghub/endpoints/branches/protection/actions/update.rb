@@ -1,0 +1,38 @@
+# frozen_string_literal: true
+
+require "transactable"
+
+module Ghub
+  module Endpoints
+    module Branches
+      module Protection
+        module Actions
+          # Handles a branch projection update action.
+          class Update
+            include Protection::Import[
+              :client,
+              request: "requests.update",
+              response: "responses.show",
+              model: "models.show"
+            ]
+
+            include Transactable
+
+            def call owner, repository, branch, body, **parameters
+              pipe(
+                body,
+                validate(request),
+                insert("repos/#{owner}/#{repository}/branches/#{branch}/protection", at: 0),
+                insert(parameters),
+                to(client, :put),
+                try(:parse, catch: JSON::ParserError),
+                validate(response),
+                to(model, :for)
+              )
+            end
+          end
+        end
+      end
+    end
+  end
+end

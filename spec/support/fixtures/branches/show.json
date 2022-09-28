@@ -1,0 +1,40 @@
+{
+  "url": "https://api.github.com/repos/bkuhlmann/test/branches/main/protection",
+  "required_status_checks": {
+    "url": "https://api.github.com/repos/bkuhlmann/test/branches/main/protection/required_status_checks",
+    "strict": false,
+    "contexts": [
+      "ci/circleci: build"
+    ],
+    "contexts_url": "https://api.github.com/repos/bkuhlmann/test/branches/main/protection/required_status_checks/contexts",
+    "checks": [
+      {
+        "context": "ci/circleci: build",
+        "app_id": null
+      }
+    ]
+  },
+  "required_signatures": {
+    "url": "https://api.github.com/repos/bkuhlmann/test/branches/main/protection/required_signatures",
+    "enabled": true
+  },
+  "enforce_admins": {
+    "url": "https://api.github.com/repos/bkuhlmann/test/branches/main/protection/enforce_admins",
+    "enabled": false
+  },
+  "required_linear_history": {
+    "enabled": true
+  },
+  "allow_force_pushes": {
+    "enabled": false
+  },
+  "allow_deletions": {
+    "enabled": false
+  },
+  "block_creations": {
+    "enabled": false
+  },
+  "required_conversation_resolution": {
+    "enabled": false
+  }
+}
