@@ -1,2 +1,19 @@
 inherit_gem:
   caliber: config/all.yml
+
+Metrics/AbcSize:
+  Exclude:
+    - "lib/ghub/endpoints/pulls/models/show.rb"
+Metrics/MethodLength:
+  Exclude:
+    - "lib/ghub/endpoints/branches/protection/models/show.rb"
+Metrics/ModuleLength:
+  Exclude:
+    - "lib/ghub/models/repository.rb"
+Metrics/ParameterLists:
+  Exclude:
+    - lib/ghub/endpoints/branches/protection/actions/show.rb
+    - lib/ghub/endpoints/branches/protection/actions/update.rb
+    - lib/ghub/endpoints/pulls/actions/show.rb
+    - lib/ghub/endpoints/repositories/actions/create.rb
+    - lib/ghub/endpoints/repositories/actions/patch.rb
