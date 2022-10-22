@@ -1,5 +1,13 @@
 = Versions
 
+== 0.1.0 (2022-10-22)
+
+* Fixed Rakefile RSpec initialization - Brooke Kuhlmann
+* Updated to Caliber 0.16.0 - Brooke Kuhlmann
+* Updated to Infusible 0.2.0 - Brooke Kuhlmann
+* Updated to Refinements 9.7.0 - Brooke Kuhlmann
+* Updated to Transactable 0.2.0 - Brooke Kuhlmann
+
 == 0.0.0 (2022-10-20)
 
 * Added API client - Brooke Kuhlmann
