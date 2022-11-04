@@ -15,9 +15,9 @@ module Ghub
       end
 
       def get path, **parameters
-        return call :get, path, params: parameters unless configuration.paginate
+        return call __method__, path, params: parameters unless configuration.paginate
 
-        page.of { |index| call :get, path, params: parameters.merge(page: index) }
+        page.of { |index| call __method__, path, params: parameters.merge(page: index) }
       end
 
       def post path, body = nil, **parameters
