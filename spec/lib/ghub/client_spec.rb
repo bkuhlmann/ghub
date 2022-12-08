@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 
-require "spec_helper"
 require "dry/container/stub"
 require "infusible/stub"
+require "spec_helper"
 
 RSpec.describe Ghub::Client do
   using Infusible::Stub

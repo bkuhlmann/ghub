@@ -13,10 +13,10 @@ unless ENV["NO_COVERAGE"]
   end
 end
 
-require "ghub"
 require "dry/container/stub"
-require "infusible/stub"
+require "ghub"
 require "http/fake"
+require "infusible/stub"
 require "refinements"
 
 using Refinements::Pathnames
