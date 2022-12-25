@@ -19,7 +19,7 @@ end
 
 group :test do
   gem "guard-rspec", "~> 4.7", require: false
-  gem "http-fake", "~> 0.0"
+  gem "http-fake", "~> 1.0"
   gem "rspec", "~> 3.12"
 end
 
