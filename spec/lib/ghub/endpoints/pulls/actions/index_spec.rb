@@ -25,7 +25,7 @@ RSpec.describe Ghub::Endpoints::Pulls::Actions::Index do
       end
 
       it "answers pull request" do
-        result = endpoint.call "bkuhlmann", "test"
+        result = endpoint.call "bkuhlmann", "test", state: "all"
         expect(result.success.last).to have_attributes(id: 211207854, number: 1)
       end
     end

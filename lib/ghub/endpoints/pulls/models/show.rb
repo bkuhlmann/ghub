@@ -32,7 +32,7 @@ module Ghub
           :labels,
           :locked,
           :maintainer_can_modify,
-          :mergable,
+          :mergeable,
           :merge_commit_sha,
           :mergeable_state,
           :merged,
@@ -59,9 +59,11 @@ module Ghub
           include Resultable
 
           def self.for attributes
+            assignee = attributes[:assignee]
+
             new attributes.merge(
               _links: Ghub::Models::Links.for(attributes[:_links]),
-              assignee: Ghub::Models::User[attributes[:assignee]],
+              assignee: (Ghub::Models::User[assignee] if assignee),
               assignees: attributes[:assignees].map { |data| Ghub::Models::User[data] },
               base: Ghub::Models::Branch[attributes[:base]],
               head: Ghub::Models::Branch[attributes[:head]],

@@ -6,13 +6,13 @@ module Ghub
       module Responses
         # Defines a single pull request.
         Show = Dry::Schema.Params do
-          required(:_links).hash(Ghub::Responses::Links)
+          required(:_links).hash Ghub::Responses::Links
           required(:active_lock_reason).maybe :string
-          required(:assignee).hash(Ghub::Responses::User)
-          required(:assignees).array(Ghub::Responses::User)
+          required(:assignee).maybe :hash, Ghub::Responses::User
+          required(:assignees).array Ghub::Responses::User
           required(:author_association).filled :string
           required(:auto_merge).maybe :bool
-          required(:base).hash(Ghub::Responses::Branch)
+          required(:base).hash Ghub::Responses::Branch
           required(:body).filled :string
           required(:closed_at).filled :string
           required(:comments_url).filled :string
@@ -20,11 +20,11 @@ module Ghub
           required(:created_at).filled :string
           required(:diff_url).filled :string
           required(:draft).filled :bool
-          required(:head).hash(Ghub::Responses::Branch)
+          required(:head).hash Ghub::Responses::Branch
           required(:html_url).filled :string
           required(:id).filled :integer
           required(:issue_url).filled :string
-          required(:labels).array(Ghub::Responses::Label)
+          required(:labels).array Ghub::Responses::Label
           required(:locked).filled :bool
           required(:merge_commit_sha).filled :string
           required(:merged_at).maybe :date_time
@@ -41,7 +41,7 @@ module Ghub
           required(:title).filled :string
           required(:updated_at).filled :string
           required(:url).filled :string
-          required(:user).hash(Ghub::Responses::User)
+          required(:user).hash Ghub::Responses::User
 
           optional(:additions).filled :integer
           optional(:changed_files).filled :integer
