@@ -19,16 +19,16 @@ module Ghub
           include Transactable
 
           def call kind, body, owner: nil, **parameters
-            path.create(kind, owner:)
-                .bind do |url_path|
-                  pipe body,
-                       validate(request),
-                       insert(url_path, parameters, at: 0),
-                       to(client, :post),
-                       try(:parse, catch: JSON::ParserError),
-                       validate(response),
-                       to(model, :for)
-                end
+            path.create(kind, owner:).bind do |url_path|
+              pipe body,
+                   validate(request),
+                   insert(url_path, at: 0),
+                   insert(parameters),
+                   to(client, :post),
+                   try(:parse, catch: JSON::ParserError),
+                   validate(response),
+                   to(model, :for)
+            end
           end
         end
       end

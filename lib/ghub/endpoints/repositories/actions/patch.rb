@@ -19,16 +19,16 @@ module Ghub
           include Transactable
 
           def call owner, id, body, **parameters
-            path.patch(owner, id)
-                .bind do |url_path|
-                  pipe body,
-                       validate(request),
-                       insert(url_path, parameters, at: 0),
-                       to(client, :patch),
-                       try(:parse, catch: JSON::ParserError),
-                       validate(response),
-                       to(model, :for)
-                end
+            path.patch(owner, id).bind do |url_path|
+              pipe body,
+                   validate(request),
+                   insert(url_path, at: 0),
+                   insert(parameters),
+                   to(client, :patch),
+                   try(:parse, catch: JSON::ParserError),
+                   validate(response),
+                   to(model, :for)
+            end
           end
         end
       end
