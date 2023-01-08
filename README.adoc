@@ -126,19 +126,27 @@ The following documents how to interact with repositories:
 
 [source,ruby]
 ----
-client.repositories.index "<owner>", "<repository>"
-client.repositories.show "<owner>", "<repository>"
+# Index (user and organization)
+# Format: client.repositories.index :<kind>, "<owner>"
+client.repositories.index :users, "doe"
+client.repositories.index :orgs, "acme"
 
-# For a user.
-# Example: client.repositories.create :users, {name: "ghub-test", private: true}
-client.repositories.create :users, <attributes>
+# Show (user or organization)
+# Format: client.repositories.show "<owner>", "<repository>"
+client.repositories.show "acme", "ghub-test"
 
-# For an organization.
-# Example: client.repositories.create :orgs, {name: "ghub-test", private: true}, owner: "acme"
-client.repositories.create :orgs, <attributes>, owner: "<organization>"
+# Create (user and organization)
+# Format: client.repositories.create :<kind>, <body>
+client.repositories.create :users, {name: "ghub-test", private: true}
+client.repositories.create :orgs, {name: "ghub-test", private: true}, owner: "acme"
 
-client.repositories.patch "<owner>", {description: "For test only."}
-client.repositories.destroy "<owner>", <id>
+# Patch (user or organization)
+# Format: client.repositories.patch "<owner>", "<repository>", <body>
+client.repositories.patch "acme", "ghub-test", {description: "For test only."}
+
+# Destroy (user or organization)
+# Format: client.repositories.destroy "<owner>", "<repository>"
+client.repositories.destroy "acme", "ghub-test"
 ----
 
 GitHub's API design for repositories is awkward and you can see this infect the Object API, especially when creating a repository. Use `:users` or `:orgs` (can be strings) to distinguish between the two types of repository creation. The only stipulation for organization creation is that you must supply the organization name. This was done so you could use the same Object API for both.
