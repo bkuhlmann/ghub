@@ -1,5 +1,14 @@
 = Versions
 
+== 0.4.0 (2023-01-08)
+
+* Fixed injection of parameters at wrong location in API requests - Brooke Kuhlmann
+* Fixed pull request index and show responses - Brooke Kuhlmann
+* Added version release notes - Brooke Kuhlmann
+* Updated to Caliber 0.21.0 - Brooke Kuhlmann
+* Updated to Git Lint 5.0.0 - Brooke Kuhlmann
+* Updated to SimpleCov 0.22.0 - Brooke Kuhlmann
+
 == 0.3.0 (2022-12-27)
 
 * Fixed RuboCop Style/RequireOrder issues - Brooke Kuhlmann
