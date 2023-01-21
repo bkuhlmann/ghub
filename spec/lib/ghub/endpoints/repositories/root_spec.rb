@@ -17,7 +17,7 @@ RSpec.describe Ghub::Endpoints::Repositories::Root do
           status 200
 
           <<~JSON
-            [#{Bundler.root.join("spec/support/fixtures/repositories/show-user.json").read}]
+            [#{SPEC_ROOT.join("support/fixtures/repositories/show-user.json").read}]
           JSON
         end
       end
@@ -35,7 +35,7 @@ RSpec.describe Ghub::Endpoints::Repositories::Root do
         get "/repos/:owner/:id" do
           headers["Content-Type"] = "application/json"
           status 200
-          Bundler.root.join("spec/support/fixtures/repositories/show-user.json").read
+          SPEC_ROOT.join("support/fixtures/repositories/show-user.json").read
         end
       end
     end
@@ -52,7 +52,7 @@ RSpec.describe Ghub::Endpoints::Repositories::Root do
         post "/user/repos" do
           headers["Content-Type"] = "application/json"
           status 201
-          Bundler.root.join("spec/support/fixtures/repositories/create_or_patch.json").read
+          SPEC_ROOT.join("support/fixtures/repositories/create_or_patch.json").read
         end
       end
     end
@@ -69,7 +69,7 @@ RSpec.describe Ghub::Endpoints::Repositories::Root do
         patch "/repos/:owner/:id" do
           headers["Content-Type"] = "application/json"
           status 200
-          Bundler.root.join("spec/support/fixtures/repositories/create_or_patch.json").read
+          SPEC_ROOT.join("support/fixtures/repositories/create_or_patch.json").read
         end
       end
     end

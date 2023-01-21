@@ -16,7 +16,7 @@ RSpec.describe Ghub::Endpoints::Repositories::Actions::Patch do
           patch "/repos/:owner/:id" do
             headers["Content-Type"] = "application/json"
             status 200
-            Bundler.root.join("spec/support/fixtures/repositories/create_or_patch.json").read
+            SPEC_ROOT.join("support/fixtures/repositories/create_or_patch.json").read
           end
         end
       end
@@ -37,7 +37,7 @@ RSpec.describe Ghub::Endpoints::Repositories::Actions::Patch do
           patch "/repos/:owner/:id" do
             headers["Content-Type"] = "application/json"
             status 201
-            Bundler.root.join("spec/support/fixtures/repositories/create_or_patch.json").read
+            SPEC_ROOT.join("support/fixtures/repositories/create_or_patch.json").read
           end
         end
       end

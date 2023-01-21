@@ -18,7 +18,7 @@ RSpec.describe Ghub::Endpoints::Repositories::Actions::Index do
             status 200
 
             <<~JSON
-              [#{Bundler.root.join("spec/support/fixtures/repositories/show-user.json").read}]
+              [#{SPEC_ROOT.join("support/fixtures/repositories/show-user.json").read}]
             JSON
           end
         end

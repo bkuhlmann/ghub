@@ -16,7 +16,7 @@ RSpec.describe Ghub::Endpoints::Repositories::Actions::Show do
           get "/repos/:owner/:id" do
             headers["Content-Type"] = "application/json"
             status 200
-            Bundler.root.join("spec/support/fixtures/repositories/show-user.json").read
+            SPEC_ROOT.join("support/fixtures/repositories/show-user.json").read
           end
         end
       end
@@ -33,7 +33,7 @@ RSpec.describe Ghub::Endpoints::Repositories::Actions::Show do
           get "/repos/:owner/:id" do
             headers["Content-Type"] = "application/json"
             status 200
-            Bundler.root.join("spec/support/fixtures/repositories/show-organization.json").read
+            SPEC_ROOT.join("support/fixtures/repositories/show-organization.json").read
           end
         end
       end

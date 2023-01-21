@@ -18,7 +18,7 @@ RSpec.describe Ghub::Endpoints::Pulls::Actions::Index do
             status 200
 
             <<~JSON
-              #{Bundler.root.join("spec/support/fixtures/pulls/index.json").read}
+              #{SPEC_ROOT.join("support/fixtures/pulls/index.json").read}
             JSON
           end
         end

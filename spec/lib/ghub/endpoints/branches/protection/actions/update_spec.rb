@@ -31,7 +31,7 @@ RSpec.describe Ghub::Endpoints::Branches::Protection::Actions::Update do
             status 200
 
             <<~JSON
-              #{Bundler.root.join("spec/support/fixtures/branches/show.json").read}
+              #{SPEC_ROOT.join("support/fixtures/branches/show.json").read}
             JSON
           end
         end

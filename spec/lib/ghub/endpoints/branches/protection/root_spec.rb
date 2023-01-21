@@ -17,7 +17,7 @@ RSpec.describe Ghub::Endpoints::Branches::Protection::Root do
           status 200
 
           <<~JSON
-            #{Bundler.root.join("spec/support/fixtures/branches/show.json").read}
+            #{SPEC_ROOT.join("support/fixtures/branches/show.json").read}
           JSON
         end
       end
@@ -35,7 +35,7 @@ RSpec.describe Ghub::Endpoints::Branches::Protection::Root do
         put "/repos/:owner/:repository/branches/:branch/protection" do
           headers["Content-Type"] = "application/json"
           status 200
-          Bundler.root.join("spec/support/fixtures/branches/show.json").read
+          SPEC_ROOT.join("support/fixtures/branches/show.json").read
         end
       end
     end
