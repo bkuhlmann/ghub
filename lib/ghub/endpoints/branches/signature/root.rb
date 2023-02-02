@@ -13,8 +13,8 @@ module Ghub
 
           PATH = "repos/%{owner}/%{repository}/branches/%{branch}/protection/required_signatures"
 
-          def initialize path: PATH, **dependencies
-            super(**dependencies)
+          def initialize(path: PATH, **)
+            super(**)
             @path = path
           end
 

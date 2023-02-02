@@ -9,8 +9,8 @@ module Ghub
       include Import[:configuration, :http]
       include Dry::Monads[:result]
 
-      def initialize page: Page, **dependencies
-        super(**dependencies)
+      def initialize(page: Page, **)
+        super(**)
         @page = page
       end
 

@@ -14,8 +14,8 @@ module Ghub
       users_endpoint: :users
     ]
 
-    def initialize **dependencies
-      super(**dependencies)
+    def initialize(**)
+      super(**)
       yield configuration if block_given?
     end
 
