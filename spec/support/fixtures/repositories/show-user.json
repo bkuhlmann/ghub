@@ -71,7 +71,7 @@
   "ssh_url": "git@github.com:bkuhlmann/archiver.git",
   "clone_url": "https://github.com/bkuhlmann/archiver.git",
   "svn_url": "https://github.com/bkuhlmann/archiver",
-  "homepage": "https://www.alchemists.io/projects/archiver",
+  "homepage": "https://alchemists.io/projects/archiver",
   "size": 199,
   "stargazers_count": 8,
   "watchers_count": 8,

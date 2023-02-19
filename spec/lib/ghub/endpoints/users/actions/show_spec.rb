@@ -39,7 +39,7 @@ RSpec.describe Ghub::Endpoints::Users::Actions::Show do
                 "site_admin": false,
                 "name": "Brooke Kuhlmann",
                 "company": "Alchemists",
-                "blog": "https://www.alchemists.io",
+                "blog": "https://alchemists.io",
                 "location": "Boulder, CO USA",
                 "email": null,
                 "hireable": null,

@@ -4,7 +4,7 @@
 
 = Ghub
 
-Ghub is portmanteau (i.e. [g]it + hub = ghub) that provides a GitHub link:https://docs.github.com/en/rest[API] client using a design which leverages link:https://www.alchemists.io/articles/ruby_function_composition[function composition] and link:https://dry-rb.org/gems/dry-monads[monads]. This gem is built upon the link:https://github.com/httprb/http[HTTP] gem instead of link:https://lostisland.github.io/faraday[Faraday] which is what the link:https://github.com/octokit/octokit.rb[Octokit] gem uses.
+Ghub is portmanteau (i.e. [g]it + hub = ghub) that provides a GitHub link:https://docs.github.com/en/rest[API] client using a design which leverages link:https://alchemists.io/articles/ruby_function_composition[function composition] and link:https://dry-rb.org/gems/dry-monads[monads]. This gem is built upon the link:https://github.com/httprb/http[HTTP] gem instead of link:https://lostisland.github.io/faraday[Faraday] which is what the link:https://github.com/octokit/octokit.rb[Octokit] gem uses.
 
 toc::[]
 
@@ -12,7 +12,7 @@ toc::[]
 
 * Provides an API client which is a partial implementation of GitHub's link:https://docs.github.com/en/rest[API].
 * Provides HTTP request and response verification using link:https://dry-rb.org/gems/dry-schema[Dry Schema].
-* Uses link:https://www.alchemists.io/articles/ruby_function_composition[Function Composition] -- coupled with link:https://www.alchemists.io/projects/transactable[Transactable] -- to process each HTTP request and response.
+* Uses link:https://alchemists.io/articles/ruby_function_composition[Function Composition] -- coupled with link:https://alchemists.io/projects/transactable[Transactable] -- to process each HTTP request and response.
 
 == Requirements
 
@@ -188,19 +188,19 @@ To test, run:
 bin/rake
 ----
 
-== link:https://www.alchemists.io/policies/license[License]
+== link:https://alchemists.io/policies/license[License]
 
-== link:https://www.alchemists.io/policies/security[Security]
+== link:https://alchemists.io/policies/security[Security]
 
-== link:https://www.alchemists.io/policies/code_of_conduct[Code of Conduct]
+== link:https://alchemists.io/policies/code_of_conduct[Code of Conduct]
 
-== link:https://www.alchemists.io/policies/contributions[Contributions]
+== link:https://alchemists.io/policies/contributions[Contributions]
 
-== link:https://www.alchemists.io/projects/ghub/versions[Versions]
+== link:https://alchemists.io/projects/ghub/versions[Versions]
 
-== link:https://www.alchemists.io/community[Community]
+== link:https://alchemists.io/community[Community]
 
 == Credits
 
-* Built with link:https://www.alchemists.io/projects/gemsmith[Gemsmith].
-* Engineered by link:https://www.alchemists.io/team/brooke_kuhlmann[Brooke Kuhlmann].
+* Built with link:https://alchemists.io/projects/gemsmith[Gemsmith].
+* Engineered by link:https://alchemists.io/team/brooke_kuhlmann[Brooke Kuhlmann].

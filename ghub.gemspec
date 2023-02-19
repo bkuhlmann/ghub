@@ -5,14 +5,14 @@ Gem::Specification.new do |spec|
   spec.version = "0.4.1"
   spec.authors = ["Brooke Kuhlmann"]
   spec.email = ["brooke@alchemists.io"]
-  spec.homepage = "https://www.alchemists.io/projects/ghub"
+  spec.homepage = "https://alchemists.io/projects/ghub"
   spec.summary = "A monadic GitHub API client."
   spec.license = "Hippocratic-2.1"
 
   spec.metadata = {
     "bug_tracker_uri" => "https://github.com/bkuhlmann/ghub/issues",
-    "changelog_uri" => "https://www.alchemists.io/projects/ghub/versions",
-    "documentation_uri" => "https://www.alchemists.io/projects/ghub",
+    "changelog_uri" => "https://alchemists.io/projects/ghub/versions",
+    "documentation_uri" => "https://alchemists.io/projects/ghub",
     "funding_uri" => "https://github.com/sponsors/bkuhlmann",
     "label" => "Ghub",
     "rubygems_mfa_required" => "true",
