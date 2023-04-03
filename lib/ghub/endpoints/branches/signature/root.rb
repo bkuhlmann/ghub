@@ -11,7 +11,7 @@ module Ghub
           include Signature::Import[:client, response: "responses.show", model: "models.show"]
           include Transactable
 
-          PATH = "repos/%{owner}/%{repository}/branches/%{branch}/protection/required_signatures"
+          PATH = "repos/%<owner>s/%<repository>s/branches/%<branch>s/protection/required_signatures"
 
           def initialize(path: PATH, **)
             super(**)
