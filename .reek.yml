@@ -8,9 +8,4 @@ detectors:
       - "Ghub::API::Client"
       - "Ghub::Endpoints::Branches::Signature::Root"
   LongParameterList:
-    exclude:
-      - "Ghub::Endpoints::Branches::Protection::Actions::Show#call"
-      - "Ghub::Endpoints::Branches::Protection::Actions::Update#call"
-      - "Ghub::Endpoints::Pulls::Actions::Show#call"
-      - "Ghub::Endpoints::Repositories::Actions::Create#call"
-      - "Ghub::Endpoints::Repositories::Actions::Patch#call"
+    enabled: false
