@@ -43,11 +43,7 @@ module Ghub
 
         def resource(owner, id) = Success "repos/#{owner}/#{id}"
 
-        def error kind
-          kinds.map(&:inspect)
-               .to_sentence(conjunction: "or")
-               .then { |choices| Failure "Invalid kind: #{kind.inspect}. Use: #{choices}." }
-        end
+        def error(kind) = Failure %(Invalid kind: #{kind.inspect}. Use: #{kinds.to_usage "or"}.)
       end
     end
   end
