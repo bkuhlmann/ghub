@@ -4,7 +4,7 @@
 
 = Ghub
 
-Ghub is portmanteau (i.e. [g]it + hub = ghub) that provides a GitHub link:https://docs.github.com/en/rest[API] client using a design which leverages link:https://alchemists.io/articles/ruby_function_composition[function composition] and link:https://dry-rb.org/gems/dry-monads[monads]. This gem is built upon the link:https://github.com/httprb/http[HTTP] gem instead of link:https://lostisland.github.io/faraday[Faraday] which is what the link:https://github.com/octokit/octokit.rb[Octokit] gem uses.
+Ghub is portmanteau (i.e. [g]it + hub = ghub) that provides a GitHub link:https://docs.github.com/en/rest[API] client using a design which leverages link:https://alchemists.io/articles/ruby_function_composition[function composition] and link:https://dry-rb.org/gems/dry-monads[monads]. This gem is built upon the link:https://github.com/httprb/http[HTTP] gem which provides a nicer Object API instead of link:https://lostisland.github.io/faraday[Faraday] which is what the link:https://github.com/octokit/octokit.rb[Octokit] gem uses.
 
 toc::[]
 
@@ -150,6 +150,15 @@ client.repositories.destroy "acme", "ghub-test"
 ----
 
 GitHub's API design for repositories is awkward and you can see this infect the Object API, especially when creating a repository. Use `:users` or `:orgs` (can be strings) to distinguish between the two types of repository creation. The only stipulation for organization creation is that you must supply the organization name. This was done so you could use the same Object API for both.
+
+==== Search
+
+The following is how to search link:https://docs.github.com/en/rest/search/search#search-users[users]:
+
+[source,ruby]
+----
+client.search_users.index q: "test@example.com"
+----
 
 ==== Users
 
