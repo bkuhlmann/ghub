@@ -13,6 +13,7 @@ module Ghub
       register(:organization_members) { Endpoints::Organizations::Members::Root.new }
       register(:pulls) { Endpoints::Pulls::Root.new }
       register(:repositories) { Endpoints::Repositories::Root.new }
+      register(:search_users) { Endpoints::Search::Users::Root.new }
       register(:users) { Endpoints::Users::Root.new }
     end
   end

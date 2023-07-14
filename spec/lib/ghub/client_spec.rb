@@ -67,6 +67,12 @@ RSpec.describe Ghub::Client do
     end
   end
 
+  describe "#search_users" do
+    it "answers endpoint" do
+      expect(client.search_users).to be_a(Ghub::Endpoints::Search::Users::Root)
+    end
+  end
+
   describe "#users" do
     it "answers endpoint" do
       expect(client.users).to be_a(Ghub::Endpoints::Users::Root)

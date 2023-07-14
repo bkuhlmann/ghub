@@ -11,6 +11,7 @@ module Ghub
       organization_members_endpoint: :organization_members,
       pulls_endpoint: :pulls,
       repositories_endpoint: :repositories,
+      search_users_endpoint: :search_users,
       users_endpoint: :users
     ]
 
@@ -28,6 +29,8 @@ module Ghub
     def pulls = pulls_endpoint
 
     def repositories = repositories_endpoint
+
+    def search_users = search_users_endpoint
 
     def users = users_endpoint
   end
