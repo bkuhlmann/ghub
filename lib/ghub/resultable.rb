@@ -5,9 +5,9 @@ module Ghub
   module Resultable
     include Dry::Monads[:result]
 
-    def self.included object
+    def self.included descendant
       super
-      object.extend ClassMethods
+      descendant.extend ClassMethods
     end
 
     # Allows an object to be callable via a class method.
