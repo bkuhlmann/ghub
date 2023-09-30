@@ -15,4 +15,5 @@ end
 
 # Main namespace.
 module Ghub
+  def self.loader(registry = Zeitwerk::Registry) = registry.loader_for __FILE__
 end
