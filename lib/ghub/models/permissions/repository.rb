@@ -9,10 +9,9 @@ module Ghub
         :maintain,
         :pull,
         :push,
-        :triage,
-        keyword_init: true
+        :triage
       ) do
-        def initialize *arguments
+        def initialize(**)
           super
           freeze
         end

@@ -15,10 +15,9 @@ module Ghub
       :privacy,
       :repositories_url,
       :slug,
-      :url,
-      keyword_init: true
+      :url
     ) do
-      def initialize *arguments
+      def initialize(**)
         super
         freeze
       end

@@ -8,10 +8,9 @@ module Ghub
       :name,
       :node_id,
       :spdx_id,
-      :url,
-      keyword_init: true
+      :url
     ) do
-      def initialize *arguments
+      def initialize(**)
         super
         freeze
       end

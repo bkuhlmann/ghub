@@ -37,12 +37,13 @@ module Ghub
           :twitter_username,
           :type,
           :updated_at,
-          :url,
-          keyword_init: true
+          :url
         ) do
           include Resultable
 
-          def initialize *arguments
+          def self.for(**) = new(**)
+
+          def initialize(**)
             super
             freeze
           end

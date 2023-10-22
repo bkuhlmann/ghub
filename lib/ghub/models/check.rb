@@ -3,12 +3,8 @@
 module Ghub
   module Models
     # Defines a check.
-    Check = Struct.new(
-      :context,
-      :app_id,
-      keyword_init: true
-    ) do
-      def initialize *arguments
+    Check = Struct.new :context, :app_id do
+      def initialize(**)
         super
         freeze
       end

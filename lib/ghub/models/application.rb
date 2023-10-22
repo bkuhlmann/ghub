@@ -15,17 +15,18 @@ module Ghub
       :owner,
       :permissions,
       :slug,
-      :updated_at,
-      keyword_init: true
+      :updated_at
     ) do
-      def self.for attributes
-        new attributes.merge(
-          owner: Owner[attributes[:owner]],
-          permissions: Permissions::Branch[attributes[:permissions]]
+      def self.for(**attributes)
+        new(
+          **attributes.merge!(
+            owner: Owner[**attributes[:owner]],
+            permissions: Permissions::Branch[**attributes[:permissions]]
+          )
         )
       end
 
-      def initialize *arguments
+      def initialize(**)
         super
         freeze
       end

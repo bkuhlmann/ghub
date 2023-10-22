@@ -10,20 +10,21 @@ module Ghub
       :teams_url,
       :url,
       :users,
-      :users_url,
-      keyword_init: true
+      :users_url
     ) do
-      def self.for attributes
-        return new unless attributes
+      def self.for(**attributes)
+        return new if attributes.empty?
 
-        new attributes.merge(
-          apps: attributes[:apps].map { |arguments| Application[arguments] },
-          teams: attributes[:teams].map { |arguments| Team[arguments] },
-          users: attributes[:users].map { |arguments| User[arguments] }
+        new(
+          **attributes.merge!(
+            apps: attributes[:apps].map { |arguments| Application[**arguments] },
+            teams: attributes[:teams].map { |arguments| Team[**arguments] },
+            users: attributes[:users].map { |arguments| User[**arguments] }
+          )
         )
       end
 
-      def initialize *arguments
+      def initialize(**)
         super
         freeze
       end

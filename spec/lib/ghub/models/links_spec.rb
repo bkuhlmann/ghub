@@ -15,7 +15,7 @@ RSpec.describe Ghub::Models::Links do
     end
 
     it "answers record" do
-      expect(described_class.for(body)).to have_attributes(
+      expect(described_class.for(**body)).to have_attributes(
         self: Ghub::Models::Link[href: "https://api.github.com/repos/bkuhlmann/test/pulls/1"],
         html: Ghub::Models::Link[href: "https://github.com/bkuhlmann/test/pull/1"],
         issue: Ghub::Models::Link[href: "https://api.github.com/repos/bkuhlmann/test/issues/1"],

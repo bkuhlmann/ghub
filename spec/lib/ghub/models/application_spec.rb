@@ -15,7 +15,7 @@ RSpec.describe Ghub::Models::Application do
     end
 
     it "answers record" do
-      expect(described_class.for(body)).to have_attributes(
+      expect(described_class.for(**body)).to have_attributes(
         created_at: kind_of(String),
         description: "",
         events: %w[push pull_request],

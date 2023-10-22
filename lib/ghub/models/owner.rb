@@ -15,10 +15,9 @@ module Ghub
       :members_url,
       :public_members_url,
       :avatar_url,
-      :description,
-      keyword_init: true
+      :description
     ) do
-      def initialize *arguments
+      def initialize(**)
         super
         freeze
       end

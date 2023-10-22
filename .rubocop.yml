@@ -7,6 +7,7 @@ Metrics/AbcSize:
 Metrics/MethodLength:
   Exclude:
     - "lib/ghub/endpoints/branches/protection/models/show.rb"
+    - "lib/ghub/endpoints/pulls/models/show.rb"
 Metrics/ModuleLength:
   Exclude:
     - "lib/ghub/models/repository.rb"

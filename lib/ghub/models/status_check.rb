@@ -9,14 +9,15 @@ module Ghub
       :contexts,
       :contexts_url,
       :checks,
-      :enforcement_level,
-      keyword_init: true
+      :enforcement_level
     ) do
-      def self.for attributes
-        new attributes.merge(checks: attributes[:checks].map { |arguments| Check[arguments] })
+      def self.for(**attributes)
+        new(
+          **attributes.merge!(checks: attributes[:checks].map { |arguments| Check[**arguments] })
+        )
       end
 
-      def initialize *arguments
+      def initialize(**)
         super
         freeze
       end

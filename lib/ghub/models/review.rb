@@ -8,18 +8,19 @@ module Ghub
       :require_code_owner_reviews,
       :required_approving_review_count,
       :url,
-      :dismissal_restrictions,
-      keyword_init: true
+      :dismissal_restrictions
     ) do
-      def self.for attributes
-        return new unless attributes
+      def self.for(**attributes)
+        return new if attributes.empty?
 
-        new attributes.merge(
-          dismissal_restrictions: DismissalRestriction.for(attributes[:dismissal_restrictions])
+        new(
+          **attributes.merge!(
+            dismissal_restrictions: DismissalRestriction.for(**attributes[:dismissal_restrictions])
+          )
         )
       end
 
-      def initialize *arguments
+      def initialize(**)
         super
         freeze
       end

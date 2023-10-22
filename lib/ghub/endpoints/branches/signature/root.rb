@@ -23,7 +23,7 @@ module Ghub
                  to(client, :get),
                  try(:parse, catch: JSON::ParserError),
                  validate(response),
-                 to(model, :new)
+                 to(model, :for)
           end
 
           def create owner, repository, branch
@@ -31,7 +31,7 @@ module Ghub
                  to(client, :post),
                  try(:parse, catch: JSON::ParserError),
                  validate(response),
-                 to(model, :new)
+                 to(model, :for)
           end
 
           def destroy owner, repository, branch

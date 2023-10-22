@@ -8,10 +8,9 @@ module Ghub
         :contents,
         :issues,
         :metadata,
-        :single_file,
-        keyword_init: true
+        :single_file
       ) do
-        def initialize *arguments
+        def initialize(**)
           super
           freeze
         end

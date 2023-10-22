@@ -10,10 +10,9 @@ module Ghub
       :id,
       :name,
       :node_id,
-      :url,
-      keyword_init: true
+      :url
     ) do
-      def initialize *arguments
+      def initialize(**)
         super
         freeze
       end

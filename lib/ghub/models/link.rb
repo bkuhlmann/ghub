@@ -3,8 +3,8 @@
 module Ghub
   module Models
     # Defines a link.
-    Link = Struct.new :href, keyword_init: true do
-      def initialize *arguments
+    Link = Struct.new :href do
+      def initialize(**)
         super
         freeze
       end

@@ -53,26 +53,27 @@ module Ghub
           :title,
           :updated_at,
           :url,
-          :user,
-          keyword_init: true
+          :user
         ) do
           include Resultable
 
-          def self.for attributes
+          def self.for(**attributes)
             assignee = attributes[:assignee]
 
-            new attributes.merge(
-              _links: Ghub::Models::Links.for(attributes[:_links]),
-              assignee: (Ghub::Models::User[assignee] if assignee),
-              assignees: attributes[:assignees].map { |data| Ghub::Models::User[data] },
-              base: Ghub::Models::Branch[attributes[:base]],
-              head: Ghub::Models::Branch[attributes[:head]],
-              labels: attributes[:labels].map { |data| Ghub::Models::Label[data] },
-              user: Ghub::Models::User[attributes[:user]]
+            new(
+              **attributes.merge!(
+                _links: Ghub::Models::Links.for(**attributes[:_links]),
+                assignee: (Ghub::Models::User[**assignee] if assignee),
+                assignees: attributes[:assignees].map { |data| Ghub::Models::User[**data] },
+                base: Ghub::Models::Branch[**attributes[:base]],
+                head: Ghub::Models::Branch[**attributes[:head]],
+                labels: attributes[:labels].map { |data| Ghub::Models::Label[**data] },
+                user: Ghub::Models::User[**attributes[:user]]
+              )
             )
           end
 
-          def initialize *arguments
+          def initialize(**)
             super
             freeze
           end

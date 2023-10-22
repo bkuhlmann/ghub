@@ -15,7 +15,7 @@ module Ghub
             pipe client.get("users/#{id}", **parameters),
                  try(:parse, catch: JSON::ParserError),
                  validate(response),
-                 to(model, :new)
+                 to(model, :for)
           end
         end
       end

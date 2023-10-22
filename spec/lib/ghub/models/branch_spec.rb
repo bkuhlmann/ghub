@@ -28,7 +28,7 @@ RSpec.describe Ghub::Models::Branch do
       let(:branch) { :base }
 
       it "answers record" do
-        expect(described_class.for(body)).to have_attributes(proof)
+        expect(described_class.for(**body)).to have_attributes(proof)
       end
     end
 
@@ -36,7 +36,7 @@ RSpec.describe Ghub::Models::Branch do
       let(:branch) { :head }
 
       it "answers record" do
-        expect(described_class.for(body)).to have_attributes(proof)
+        expect(described_class.for(**body)).to have_attributes(proof)
       end
     end
   end

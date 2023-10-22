@@ -17,26 +17,29 @@ module Ghub
             :required_signatures,
             :required_status_checks,
             :restrictions,
-            :url,
-            keyword_init: true
+            :url
           ) do
             include Resultable
 
-            def self.for attributes
-              new attributes.merge(
-                enforce_admins: Ghub::Models::BooleanLink[attributes[:enforce_admins]],
-                required_signatures: Ghub::Models::BooleanLink[attributes[:required_signatures]],
-                required_status_checks: Ghub::Models::StatusCheck.for(
-                  attributes[:required_status_checks]
-                ),
-                required_pull_request_reviews: Ghub::Models::Review.for(
-                  attributes[:required_pull_request_reviews]
-                ),
-                restrictions: Ghub::Models::Restriction.for(attributes[:restrictions])
+            def self.for(**attributes)
+              new(
+                **attributes.merge!(
+                  enforce_admins: Ghub::Models::BooleanLink[**attributes[:enforce_admins]],
+                  required_signatures: Ghub::Models::BooleanLink[
+                    **Hash(attributes[:required_signatures])
+                  ],
+                  required_status_checks: Ghub::Models::StatusCheck.for(
+                    **Hash(attributes[:required_status_checks])
+                  ),
+                  required_pull_request_reviews: Ghub::Models::Review.for(
+                    **Hash(attributes[:required_pull_request_reviews])
+                  ),
+                  restrictions: Ghub::Models::Restriction.for(**Hash(attributes[:restrictions]))
+                )
               )
             end
 
-            def initialize *arguments
+            def initialize(**)
               super
               freeze
             end

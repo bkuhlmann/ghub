@@ -23,12 +23,13 @@ module Ghub
           :starred_url,
           :subscriptions_url,
           :type,
-          :url,
-          keyword_init: true
+          :url
         ) do
           include Resultable
 
-          def initialize *arguments
+          def self.for(**) = new(**)
+
+          def initialize(**)
             super
             freeze
           end

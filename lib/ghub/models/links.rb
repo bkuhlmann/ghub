@@ -11,15 +11,14 @@ module Ghub
       :review_comments,
       :review_comment,
       :commits,
-      :statuses,
-      keyword_init: true
+      :statuses
     ) do
-      def self.for attributes
-        attributes.reduce({}) { |collection, (key, value)| collection.merge key => Link[value] }
-                  .then { |updated_attributes| new updated_attributes }
+      def self.for(**attributes)
+        attributes.reduce({}) { |collection, (key, value)| collection.merge key => Link[**value] }
+                  .then { |updates| new(**updates) }
       end
 
-      def initialize *arguments
+      def initialize(**)
         super
         freeze
       end

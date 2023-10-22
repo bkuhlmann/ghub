@@ -3,8 +3,10 @@
 module Ghub
   module Models
     # Defines a boolean link.
-    BooleanLink = Struct.new :enabled, :url, keyword_init: true do
-      def initialize *arguments
+    BooleanLink = Struct.new :enabled, :url do
+      def self.for(**) = new(**)
+
+      def initialize(**)
         super
         freeze
       end

@@ -15,7 +15,7 @@ RSpec.describe Ghub::Models::StatusCheck do
     end
 
     it "answers filled record when body exists" do
-      expect(described_class.for(body)).to have_attributes(
+      expect(described_class.for(**body)).to have_attributes(
         url: kind_of(String),
         strict: false,
         contexts: ["ci/circleci: build"],

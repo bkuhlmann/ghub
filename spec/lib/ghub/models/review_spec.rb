@@ -15,7 +15,7 @@ RSpec.describe Ghub::Models::Review do
     end
 
     it "answers empty record when given nil" do
-      expect(described_class.for(nil)).to have_attributes(
+      expect(described_class.for).to have_attributes(
         dismiss_stale_reviews: nil,
         require_code_owner_reviews: nil,
         required_approving_review_count: nil,
@@ -25,7 +25,7 @@ RSpec.describe Ghub::Models::Review do
     end
 
     it "answers filled record when body exists" do
-      expect(described_class.for(body)).to have_attributes(
+      expect(described_class.for(**body)).to have_attributes(
         dismiss_stale_reviews: true,
         require_code_owner_reviews: true,
         required_approving_review_count: 2,

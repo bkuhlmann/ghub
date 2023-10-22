@@ -21,7 +21,7 @@ RSpec.describe Ghub::Models::Repository do
       let(:file) { "show-user" }
 
       it "answers transformed keys" do
-        expect(described_class.for(body)).to have_attributes(
+        expect(described_class.for(**body)).to have_attributes(
           license: kind_of(Ghub::Models::License),
           owner: kind_of(Ghub::Models::User),
           weight: kind_of(Integer)
@@ -33,7 +33,7 @@ RSpec.describe Ghub::Models::Repository do
       let(:file) { "create_or_patch" }
 
       it "answers transformed keys" do
-        expect(described_class.for(body)).to have_attributes(
+        expect(described_class.for(**body)).to have_attributes(
           organization: kind_of(Ghub::Models::User),
           permissions: kind_of(Ghub::Models::Permissions::Repository)
         )
@@ -45,7 +45,7 @@ RSpec.describe Ghub::Models::Repository do
 
       it "answers transformed keys" do
         body.delete :license
-        expect(described_class.for(body)).to have_attributes(license: nil)
+        expect(described_class.for(**body)).to have_attributes(license: nil)
       end
     end
   end

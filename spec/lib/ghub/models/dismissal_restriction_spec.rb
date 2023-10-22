@@ -15,7 +15,7 @@ RSpec.describe Ghub::Models::DismissalRestriction do
     end
 
     it "answers empty record when given nil" do
-      expect(described_class.for(nil)).to have_attributes(
+      expect(described_class.for).to have_attributes(
         apps: nil,
         teams: nil,
         teams_url: nil,
@@ -26,7 +26,7 @@ RSpec.describe Ghub::Models::DismissalRestriction do
     end
 
     it "answers filled record when body exists" do
-      expect(described_class.for(body)).to have_attributes(
+      expect(described_class.for(**body)).to have_attributes(
         apps: array_including(kind_of(Ghub::Models::Application)),
         teams: array_including(kind_of(Ghub::Models::Team)),
         teams_url: kind_of(String),

@@ -18,7 +18,7 @@ module Ghub
                 try(:parse, catch: JSON::ParserError),
                 validate(response),
                 as(:fetch, :items),
-                map { |item| model.new item.to_h }
+                map { |item| model.for(**item) }
               )
             end
           end

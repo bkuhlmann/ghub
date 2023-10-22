@@ -21,7 +21,7 @@ module Ghub
                 fmap { |body| {body:} },
                 validate(response),
                 as(:fetch, :body),
-                map { |item| model.new item }
+                map { |item| model.for(**item) }
               )
             end
           end
