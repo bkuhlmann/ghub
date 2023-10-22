@@ -1,5 +1,12 @@
 = Versions
 
+== 0.8.0 (2023-10-22)
+
+* Updated structs to no longer use keyword arguments flag - Brooke Kuhlmann
+* Updated to Caliber 0.42.0 - Brooke Kuhlmann
+* Updated to Infusible 2.2.0 - Brooke Kuhlmann
+* Refactored Gemfile to use ruby file syntax - Brooke Kuhlmann
+
 == 0.7.0 (2023-09-30)
 
 * Fixed Zeitwerk loader - Brooke Kuhlmann
