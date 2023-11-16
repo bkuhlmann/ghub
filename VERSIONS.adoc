@@ -1,5 +1,10 @@
 = Versions
 
+== 0.8.1 (2023-11-15)
+
+* Fixed gem loader to find by tag and cache instance - Brooke Kuhlmann
+* Updated Gemfile to support next minor Ruby version - Brooke Kuhlmann
+
 == 0.8.0 (2023-10-22)
 
 * Updated structs to no longer use keyword arguments flag - Brooke Kuhlmann
