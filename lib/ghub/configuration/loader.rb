@@ -1,12 +1,12 @@
 # frozen_string_literal: true
 
-require "refinements/strings"
+require "refinements/string"
 
 module Ghub
   module Configuration
     # Handles loading of configuration with environment defaults.
     class Loader
-      using Refinements::Strings
+      using Refinements::String
 
       def initialize model = Content, environment: ENV
         @model = model

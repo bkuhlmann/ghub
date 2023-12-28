@@ -2,7 +2,7 @@
 
 require "dry/monads"
 require "json"
-require "refinements/arrays"
+require "refinements/array"
 
 module Ghub
   module API
@@ -10,7 +10,7 @@ module Ghub
     class Page
       extend Dry::Monads[:result]
 
-      using Refinements::Arrays
+      using Refinements::Array
 
       def self.of index = 1, bodies: [], &request
         yield(index).fmap { |response| new response }

@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 require "dry/monads"
-require "refinements/arrays"
+require "refinements/array"
 
 module Ghub
   module Endpoints
@@ -10,7 +10,7 @@ module Ghub
       class Path
         include Dry::Monads[:result]
 
-        using Refinements::Arrays
+        using Refinements::Array
 
         KINDS = %w[users orgs].freeze
 
