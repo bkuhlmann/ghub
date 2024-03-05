@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require "transactable"
+require "pipeable"
 
 module Ghub
   module Endpoints
@@ -15,7 +15,7 @@ module Ghub
             model: "models.show"
           ]
 
-          include Transactable
+          include Pipeable
 
           def call kind, owner, **parameters
             pipe(

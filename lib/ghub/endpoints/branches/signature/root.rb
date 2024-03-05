@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require "transactable"
+require "pipeable"
 
 module Ghub
   module Endpoints
@@ -9,7 +9,7 @@ module Ghub
         # Provides access to the branch signature API endpoint.
         class Root
           include Signature::Import[:client, response: "responses.show", model: "models.show"]
-          include Transactable
+          include Pipeable
 
           PATH = "repos/%<owner>s/%<repository>s/branches/%<branch>s/protection/required_signatures"
 

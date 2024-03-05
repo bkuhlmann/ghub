@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require "transactable"
+require "pipeable"
 
 module Ghub
   module Endpoints
@@ -9,7 +9,7 @@ module Ghub
         # Handles a user index action.
         class Index
           include Users::Import[:client, response: "responses.index", model: "models.index"]
-          include Transactable
+          include Pipeable
 
           def call **parameters
             pipe(

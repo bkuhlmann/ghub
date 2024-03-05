@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require "transactable"
+require "pipeable"
 
 module Ghub
   module Endpoints
@@ -10,7 +10,7 @@ module Ghub
           # Handles a branch projection show action.
           class Show
             include Protection::Import[:client, response: "responses.show", model: "models.show"]
-            include Transactable
+            include Pipeable
 
             def call owner, repository, branch, **parameters
               pipe(

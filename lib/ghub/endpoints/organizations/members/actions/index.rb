@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require "transactable"
+require "pipeable"
 
 module Ghub
   module Endpoints
@@ -10,7 +10,7 @@ module Ghub
           # Handles an organization member index action.
           class Index
             include Members::Import[:client, response: "responses.index", model: "models.show"]
-            include Transactable
+            include Pipeable
 
             def call owner, **parameters
               pipe(

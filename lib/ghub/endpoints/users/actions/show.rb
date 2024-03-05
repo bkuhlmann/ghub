@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require "transactable"
+require "pipeable"
 
 module Ghub
   module Endpoints
@@ -9,7 +9,7 @@ module Ghub
         # Handles a user show action.
         class Show
           include Users::Import[:client, response: "responses.show", model: "models.show"]
-          include Transactable
+          include Pipeable
 
           def call id, **parameters
             pipe client.get("users/#{id}", **parameters),
