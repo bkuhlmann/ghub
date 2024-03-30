@@ -3,11 +3,9 @@
 require "spec_helper"
 
 RSpec.describe Ghub::Endpoints::Search::Users::Actions::Index do
-  using Infusible::Stub
+  subject(:endpoint) { described_class.new api: }
 
-  subject(:endpoint) { described_class.new }
-
-  around { |example| Ghub::Import.stub_with(http:) { example.run } }
+  include_context "with application dependencies"
 
   describe "#index" do
     context "with success" do

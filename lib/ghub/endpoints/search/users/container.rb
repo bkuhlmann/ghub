@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require "dry/container"
+require "containable"
 
 module Ghub
   module Endpoints
@@ -8,16 +8,14 @@ module Ghub
       module Users
         # Defines user dependencies.
         module Container
-          extend Dry::Container::Mixin
-
-          merge Ghub::Container
+          extend Containable
 
           namespace :responses do
-            register(:index) { Responses::Index }
+            register :index, Responses::Index
           end
 
           namespace :models do
-            register(:index) { Models::Index }
+            register :index, Models::Index
           end
 
           namespace :actions do

@@ -8,7 +8,8 @@ module Ghub
       module Signature
         # Provides access to the branch signature API endpoint.
         class Root
-          include Signature::Import[:api, response: "responses.show", model: "models.show"]
+          include Ghub::Import[:api]
+          include Signature::Import[response: "responses.show", model: "models.show"]
           include Pipeable
 
           PATH = "repos/%<owner>s/%<repository>s/branches/%<branch>s/protection/required_signatures"

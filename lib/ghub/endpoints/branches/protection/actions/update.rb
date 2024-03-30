@@ -9,8 +9,9 @@ module Ghub
         module Actions
           # Handles a branch projection update action.
           class Update
+            include Ghub::Import[:api]
+
             include Protection::Import[
-              :api,
               request: "requests.update",
               response: "responses.show",
               model: "models.show"

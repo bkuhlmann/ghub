@@ -9,7 +9,8 @@ module Ghub
         module Actions
           # Handles a user index action.
           class Index
-            include Import[:api, response: "responses.index", model: "models.index"]
+            include Ghub::Import[:api]
+            include Import[response: "responses.index", model: "models.index"]
             include Pipeable
 
             def call **parameters

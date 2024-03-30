@@ -1,18 +1,16 @@
 # frozen_string_literal: true
 
-require "dry/container/stub"
-require "infusible/stub"
 require "spec_helper"
 
 RSpec.describe Ghub::Client do
-  using Infusible::Stub
-
   subject(:client) { described_class.new }
 
   describe "#initialize" do
     let(:configuration) { Ghub::Configuration::Content.new }
 
-    around { |example| Ghub::Import.stub_with(configuration:) { example.run } }
+    before { Ghub::Container.stub! configuration: }
+
+    after { Ghub::Container.restore }
 
     it "answers original configuration without block" do
       described_class.new

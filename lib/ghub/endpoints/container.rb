@@ -1,12 +1,12 @@
 # frozen_string_literal: true
 
-require "dry/container"
+require "containable"
 
 module Ghub
   module Endpoints
     # Defines endpoint dependencies.
     module Container
-      extend Dry::Container::Mixin
+      extend Containable
 
       register(:branch_protection) { Endpoints::Branches::Protection::Root.new }
       register(:branch_signature) { Endpoints::Branches::Signature::Root.new }

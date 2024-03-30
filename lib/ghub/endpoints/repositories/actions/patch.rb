@@ -8,8 +8,9 @@ module Ghub
       module Actions
         # Handles a repository patch action.
         class Patch
+          include Ghub::Import[:api]
+
           include Import[
-            :api,
             :path,
             request: "requests.patch",
             response: "responses.show",

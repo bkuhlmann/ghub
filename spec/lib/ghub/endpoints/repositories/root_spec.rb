@@ -3,11 +3,16 @@
 require "spec_helper"
 
 RSpec.describe Ghub::Endpoints::Repositories::Root do
-  using Infusible::Stub
+  subject :endpoint do
+    described_class.new api:, create_action:, index_action:, patch_action:, show_action:
+  end
 
-  subject(:endpoint) { described_class.new }
+  include_context "with application dependencies"
 
-  around { |example| Ghub::Import.stub_with(http:) { example.run } }
+  let(:create_action) { Ghub::Endpoints::Repositories::Actions::Create.new api: }
+  let(:index_action) { Ghub::Endpoints::Repositories::Actions::Index.new api: }
+  let(:patch_action) { Ghub::Endpoints::Repositories::Actions::Patch.new api: }
+  let(:show_action) { Ghub::Endpoints::Repositories::Actions::Show.new api: }
 
   describe "#index" do
     let :http do

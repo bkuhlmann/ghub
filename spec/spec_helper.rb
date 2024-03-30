@@ -13,10 +13,8 @@ end
 
 Bundler.require :tools
 
-require "dry/container/stub"
 require "ghub"
 require "http/fake"
-require "infusible/stub"
 require "refinements"
 
 SPEC_ROOT = Pathname(__dir__).realpath.freeze

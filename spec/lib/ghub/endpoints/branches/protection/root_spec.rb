@@ -3,11 +3,12 @@
 require "spec_helper"
 
 RSpec.describe Ghub::Endpoints::Branches::Protection::Root do
-  using Infusible::Stub
+  subject(:endpoint) { described_class.new api:, show_action:, update_action: }
 
-  subject(:endpoint) { described_class.new }
+  include_context "with application dependencies"
 
-  around { |example| Ghub::Import.stub_with(http:) { example.run } }
+  let(:show_action) { Ghub::Endpoints::Branches::Protection::Actions::Show.new api: }
+  let(:update_action) { Ghub::Endpoints::Branches::Protection::Actions::Update.new api: }
 
   describe "#show" do
     let :http do

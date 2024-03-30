@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require "dry/container"
+require "containable"
 
 module Ghub
   module Endpoints
@@ -8,20 +8,18 @@ module Ghub
       module Protection
         # Defines branch protection dependencies.
         module Container
-          extend Dry::Container::Mixin
-
-          merge Ghub::Container
+          extend Containable
 
           namespace :requests do
-            register(:update) { Requests::Update }
+            register :update, Requests::Update
           end
 
           namespace :responses do
-            register(:show) { Responses::Show }
+            register :show, Responses::Show
           end
 
           namespace :models do
-            register(:show) { Models::Show }
+            register :show, Models::Show
           end
 
           namespace :actions do

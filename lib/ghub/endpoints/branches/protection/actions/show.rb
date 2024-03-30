@@ -9,7 +9,8 @@ module Ghub
         module Actions
           # Handles a branch projection show action.
           class Show
-            include Protection::Import[:api, response: "responses.show", model: "models.show"]
+            include Ghub::Import[:api]
+            include Protection::Import[response: "responses.show", model: "models.show"]
             include Pipeable
 
             def call owner, repository, branch, **parameters
