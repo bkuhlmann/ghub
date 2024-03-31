@@ -9,7 +9,7 @@ module Ghub
         # Handles a repository create action.
         class Create
           include Import[
-            :client,
+            :api,
             :path,
             request: "requests.create",
             response: "responses.show",
@@ -24,7 +24,7 @@ module Ghub
                    validate(request),
                    insert(url_path, at: 0),
                    insert(parameters),
-                   to(client, :post),
+                   to(api, :post),
                    try(:parse, catch: JSON::ParserError),
                    validate(response),
                    to(model, :for)

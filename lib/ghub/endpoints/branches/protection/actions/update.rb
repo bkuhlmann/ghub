@@ -10,7 +10,7 @@ module Ghub
           # Handles a branch projection update action.
           class Update
             include Protection::Import[
-              :client,
+              :api,
               request: "requests.update",
               response: "responses.show",
               model: "models.show"
@@ -24,7 +24,7 @@ module Ghub
                 validate(request),
                 insert("repos/#{owner}/#{repository}/branches/#{branch}/protection", at: 0),
                 insert(parameters),
-                to(client, :put),
+                to(api, :put),
                 try(:parse, catch: JSON::ParserError),
                 validate(response),
                 to(model, :for)

@@ -9,7 +9,7 @@ module Ghub
     extend Dry::Container::Mixin
 
     register(:configuration, memoize: true) { Configuration::Loader.new.call }
-    register(:http) { HTTP }
-    register(:client) { API::Client.new }
+    register :http, HTTP
+    register(:api) { API::Client.new }
   end
 end

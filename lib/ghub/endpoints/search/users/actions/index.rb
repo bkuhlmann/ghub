@@ -9,12 +9,12 @@ module Ghub
         module Actions
           # Handles a user index action.
           class Index
-            include Import[:client, response: "responses.index", model: "models.index"]
+            include Import[:api, response: "responses.index", model: "models.index"]
             include Pipeable
 
             def call **parameters
               pipe(
-                client.get("search/users", **parameters),
+                api.get("search/users", **parameters),
                 try(:parse, catch: JSON::ParserError),
                 validate(response),
                 as(:fetch, :items),

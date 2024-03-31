@@ -8,7 +8,7 @@ module Ghub
       module Signature
         # Provides access to the branch signature API endpoint.
         class Root
-          include Signature::Import[:client, response: "responses.show", model: "models.show"]
+          include Signature::Import[:api, response: "responses.show", model: "models.show"]
           include Pipeable
 
           PATH = "repos/%<owner>s/%<repository>s/branches/%<branch>s/protection/required_signatures"
@@ -20,7 +20,7 @@ module Ghub
 
           def show owner, repository, branch
             pipe format(path, owner:, repository:, branch:),
-                 to(client, :get),
+                 to(api, :get),
                  try(:parse, catch: JSON::ParserError),
                  validate(response),
                  to(model, :for)
@@ -28,14 +28,14 @@ module Ghub
 
           def create owner, repository, branch
             pipe format(path, owner:, repository:, branch:),
-                 to(client, :post),
+                 to(api, :post),
                  try(:parse, catch: JSON::ParserError),
                  validate(response),
                  to(model, :for)
           end
 
           def destroy owner, repository, branch
-            client.delete format(path, owner:, repository:, branch:)
+            api.delete format(path, owner:, repository:, branch:)
           end
 
           private

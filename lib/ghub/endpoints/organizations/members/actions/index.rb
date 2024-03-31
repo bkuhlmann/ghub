@@ -9,14 +9,14 @@ module Ghub
         module Actions
           # Handles an organization member index action.
           class Index
-            include Members::Import[:client, response: "responses.index", model: "models.show"]
+            include Members::Import[:api, response: "responses.index", model: "models.show"]
             include Pipeable
 
             def call owner, **parameters
               pipe(
                 "orgs/#{owner}/members",
                 insert(parameters),
-                to(client, :get),
+                to(api, :get),
                 try(:parse, catch: JSON::ParserError),
                 fmap { |body| {body:} },
                 validate(response),

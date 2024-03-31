@@ -9,7 +9,7 @@ module Ghub
         # Handles a repository index action.
         class Index
           include Repositories::Import[
-            :client,
+            :api,
             :path,
             response: "responses.index",
             model: "models.show"
@@ -21,7 +21,7 @@ module Ghub
             pipe(
               path.index(kind, owner),
               insert(parameters),
-              to(client, :get),
+              to(api, :get),
               try(:parse, catch: JSON::ParserError),
               fmap { |body| {body:} },
               validate(response),

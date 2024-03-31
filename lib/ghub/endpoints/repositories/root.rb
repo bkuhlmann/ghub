@@ -6,7 +6,7 @@ module Ghub
       # Provides access to the users API endpoint.
       class Root
         include Repositories::Import[
-          :client,
+          :api,
           create_action: "actions.create",
           index_action: "actions.index",
           patch_action: "actions.patch",
@@ -21,7 +21,7 @@ module Ghub
 
         def patch(...) = patch_action.call(...)
 
-        def destroy(owner, id) = client.delete "repos/#{owner}/#{id}"
+        def destroy(owner, id) = api.delete "repos/#{owner}/#{id}"
       end
     end
   end

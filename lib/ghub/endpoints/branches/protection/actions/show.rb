@@ -9,12 +9,12 @@ module Ghub
         module Actions
           # Handles a branch projection show action.
           class Show
-            include Protection::Import[:client, response: "responses.show", model: "models.show"]
+            include Protection::Import[:api, response: "responses.show", model: "models.show"]
             include Pipeable
 
             def call owner, repository, branch, **parameters
               pipe(
-                client.get(
+                api.get(
                   "repos/#{owner}/#{repository}/branches/#{branch}/protection",
                   **parameters
                 ),

@@ -9,7 +9,7 @@ module Ghub
         # Handles a repository patch action.
         class Patch
           include Import[
-            :client,
+            :api,
             :path,
             request: "requests.patch",
             response: "responses.show",
@@ -24,7 +24,7 @@ module Ghub
                    validate(request),
                    insert(url_path, at: 0),
                    insert(parameters),
-                   to(client, :patch),
+                   to(api, :patch),
                    try(:parse, catch: JSON::ParserError),
                    validate(response),
                    to(model, :for)

@@ -8,12 +8,12 @@ module Ghub
       module Actions
         # Handles a repository index action.
         class Show
-          include Pulls::Import[:client, response: "responses.show", model: "models.show"]
+          include Pulls::Import[:api, response: "responses.show", model: "models.show"]
           include Pipeable
 
           def call owner, repository, id, **parameters
             pipe(
-              client.get("repos/#{owner}/#{repository}/pulls/#{id}", **parameters),
+              api.get("repos/#{owner}/#{repository}/pulls/#{id}", **parameters),
               try(:parse, catch: JSON::ParserError),
               validate(response),
               to(model, :for)

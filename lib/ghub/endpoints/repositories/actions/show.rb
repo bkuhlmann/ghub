@@ -9,7 +9,7 @@ module Ghub
         # Handles a repository show action.
         class Show
           include Repositories::Import[
-            :client,
+            :api,
             :path,
             response: "responses.show",
             model: "models.show"
@@ -20,7 +20,7 @@ module Ghub
           def call owner, id, **parameters
             pipe path.show(owner, id),
                  insert(parameters),
-                 to(client, :get),
+                 to(api, :get),
                  try(:parse, catch: JSON::ParserError),
                  validate(response),
                  to(model, :for)
