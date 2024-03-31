@@ -55,8 +55,6 @@ module Ghub
           :url,
           :user
         ) do
-          include Resultable
-
           def self.for(**attributes)
             assignee = attributes[:assignee]
 

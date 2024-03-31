@@ -27,8 +27,6 @@ module Ghub
             :type,
             :url
           ) do
-            include Resultable
-
             def self.for(**) = new(**)
 
             def initialize(**)

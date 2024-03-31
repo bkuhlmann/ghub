@@ -5,8 +5,6 @@ require "spec_helper"
 RSpec.describe Ghub::Endpoints::Pulls::Models::Show do
   subject(:model) { described_class.new }
 
-  include_examples "a result"
-
   describe ".for" do
     let :body do
       Bundler.root

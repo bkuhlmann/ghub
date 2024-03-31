@@ -39,8 +39,6 @@ module Ghub
           :updated_at,
           :url
         ) do
-          include Resultable
-
           def self.for(**) = new(**)
 
           def initialize(**)

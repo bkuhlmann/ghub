@@ -19,8 +19,6 @@ module Ghub
             :restrictions,
             :url
           ) do
-            include Resultable
-
             def self.for(**attributes)
               new(
                 **attributes.merge!(

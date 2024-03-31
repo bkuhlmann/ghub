@@ -88,8 +88,6 @@ module Ghub
       :web_commit_signoff_required,
       :weight
     ) do
-      include Resultable
-
       def self.for(**attributes)
         new(
           **attributes.transform_keys!(size: :weight).merge(
