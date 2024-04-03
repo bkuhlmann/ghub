@@ -6,7 +6,7 @@ module Ghub
   module Endpoints
     module Branches
       module Protection
-        Import = Infusible.with Container
+        Import = Infusible[Container]
       end
     end
   end

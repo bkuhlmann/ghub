@@ -6,7 +6,7 @@ module Ghub
   module Endpoints
     module Organizations
       module Members
-        Import = Infusible.with Container
+        Import = Infusible[Container]
       end
     end
   end

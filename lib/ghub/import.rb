@@ -3,5 +3,5 @@
 require "infusible"
 
 module Ghub
-  Import = Infusible.with Container
+  Import = Infusible[Container]
 end

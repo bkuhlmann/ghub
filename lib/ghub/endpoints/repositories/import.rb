@@ -5,7 +5,7 @@ require "infusible"
 module Ghub
   module Endpoints
     module Repositories
-      Import = Infusible.with Container
+      Import = Infusible[Container]
     end
   end
 end

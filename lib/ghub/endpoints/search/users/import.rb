@@ -6,7 +6,7 @@ module Ghub
   module Endpoints
     module Search
       module Users
-        Import = Infusible.with Container
+        Import = Infusible[Container]
       end
     end
   end
