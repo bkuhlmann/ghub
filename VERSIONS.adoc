@@ -1,5 +1,19 @@
 = Versions
 
+== 0.12.0 (2024-04-03)
+
+* 🟢 Added Containable gem - Brooke Kuhlmann
+* 🟢 Added RSpec application dependencies shared context - Brooke Kuhlmann
+* 🟢 Added user search endpoint spec - Brooke Kuhlmann
+* 🟢 Added version release notes - Brooke Kuhlmann
+* 🔼 Updated implementation to use Containable - Brooke Kuhlmann
+* 🔼 Updated setup script as a Ruby script - Brooke Kuhlmann
+* 🔼 Updated to Infusible 3.5.0 - Brooke Kuhlmann
+* 🔼 Updated to Pipeable 0.2.0 - Brooke Kuhlmann
+* ⛔️ Removed Dry Container gem - Brooke Kuhlmann
+* ⛔️ Removed resultable module - Brooke Kuhlmann
+* 🔁 Refactored API dependency - Brooke Kuhlmann
+
 == 0.11.0 (2024-03-09)
 
 * 🟢 Added Pipeable gem - Brooke Kuhlmann

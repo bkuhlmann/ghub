@@ -2,6 +2,8 @@
 :toclevels: 5
 :figure-caption!:
 
+:pipeable_link: link:https://alchemists.io/projects/pipeable[Pipeable]
+
 = Ghub
 
 Ghub is portmanteau (i.e. [g]it + hub = ghub) that provides a GitHub link:https://docs.github.com/en/rest[API] client using a design which leverages link:https://alchemists.io/articles/ruby_function_composition[function composition] and link:https://dry-rb.org/gems/dry-monads[monads]. This gem is built upon the link:https://github.com/httprb/http[HTTP] gem which provides a nicer Object API instead of link:https://lostisland.github.io/faraday[Faraday] which is what the link:https://github.com/octokit/octokit.rb[Octokit] gem uses.
@@ -12,7 +14,7 @@ toc::[]
 
 * Provides an API client which is a partial implementation of GitHub's link:https://docs.github.com/en/rest[API].
 * Provides HTTP request and response verification using link:https://dry-rb.org/gems/dry-schema[Dry Schema].
-* Uses link:https://alchemists.io/articles/ruby_function_composition[Function Composition] -- coupled with link:https://alchemists.io/projects/transactable[Transactable] -- to process each HTTP request and response.
+* Uses link:https://alchemists.io/articles/ruby_function_composition[Function Composition] -- coupled with {pipeable_link} -- to process each HTTP request and response.
 
 == Requirements
 
