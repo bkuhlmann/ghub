@@ -16,7 +16,7 @@ module Ghub
             pipe(
               api.get("repos/#{owner}/#{repository}/pulls/#{id}", **parameters),
               try(:parse, catch: JSON::ParserError),
-              validate(response),
+              validate(response, as: :to_h),
               to(model, :for)
             )
           end

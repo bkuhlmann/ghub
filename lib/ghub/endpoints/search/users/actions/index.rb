@@ -17,7 +17,7 @@ module Ghub
               pipe(
                 api.get("search/users", **parameters),
                 try(:parse, catch: JSON::ParserError),
-                validate(response),
+                validate(response, as: :to_h),
                 as(:fetch, :items),
                 map { |item| model.for(**item) }
               )

@@ -15,7 +15,7 @@ module Ghub
           def call id, **parameters
             pipe api.get("users/#{id}", **parameters),
                  try(:parse, catch: JSON::ParserError),
-                 validate(response),
+                 validate(response, as: :to_h),
                  to(model, :for)
           end
         end

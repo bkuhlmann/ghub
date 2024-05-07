@@ -17,7 +17,7 @@ module Ghub
               api.get("users", **parameters),
               try(:parse, catch: JSON::ParserError),
               fmap { |body| {body:} },
-              validate(response),
+              validate(response, as: :to_h),
               as(:fetch, :body),
               map { |item| model.for(**item) }
             )

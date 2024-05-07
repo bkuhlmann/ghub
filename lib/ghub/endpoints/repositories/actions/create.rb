@@ -27,7 +27,7 @@ module Ghub
                    insert(parameters),
                    to(api, :post),
                    try(:parse, catch: JSON::ParserError),
-                   validate(response),
+                   validate(response, as: :to_h),
                    to(model, :for)
             end
           end

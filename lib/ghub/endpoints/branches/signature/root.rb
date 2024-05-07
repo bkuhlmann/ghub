@@ -23,7 +23,7 @@ module Ghub
             pipe format(path, owner:, repository:, branch:),
                  to(api, :get),
                  try(:parse, catch: JSON::ParserError),
-                 validate(response),
+                 validate(response, as: :to_h),
                  to(model, :for)
           end
 
@@ -31,7 +31,7 @@ module Ghub
             pipe format(path, owner:, repository:, branch:),
                  to(api, :post),
                  try(:parse, catch: JSON::ParserError),
-                 validate(response),
+                 validate(response, as: :to_h),
                  to(model, :for)
           end
 

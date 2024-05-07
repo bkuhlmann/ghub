@@ -20,7 +20,7 @@ module Ghub
                 to(api, :get),
                 try(:parse, catch: JSON::ParserError),
                 fmap { |body| {body:} },
-                validate(response),
+                validate(response, as: :to_h),
                 as(:fetch, :body),
                 map { |item| model.for(**item) }
               )
