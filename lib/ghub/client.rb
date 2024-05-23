@@ -16,7 +16,7 @@ module Ghub
     include Import[:configuration]
 
     def initialize(**)
-      super(**)
+      super
       yield configuration if block_given?
     end
   end
