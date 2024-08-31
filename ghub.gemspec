@@ -12,7 +12,7 @@ Gem::Specification.new do |spec|
   spec.metadata = {
     "bug_tracker_uri" => "https://github.com/bkuhlmann/ghub/issues",
     "changelog_uri" => "https://alchemists.io/projects/ghub/versions",
-    "documentation_uri" => "https://alchemists.io/projects/ghub",
+    "homepage_uri" => "https://alchemists.io/projects/ghub",
     "funding_uri" => "https://github.com/sponsors/bkuhlmann",
     "label" => "Ghub",
     "rubygems_mfa_required" => "true",
