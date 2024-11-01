@@ -1,5 +1,10 @@
 = Versions
 
+== 0.20.0 (2024-11-01)
+
+* ✅ Fixed RuboCop Style/KeywordArgumentsMerging issue - Brooke Kuhlmann
+* 🔼 Updated to Refinements 12.10.0 - Brooke Kuhlmann
+
 == 0.19.0 (2024-10-17)
 
 * 🔼 Updated to Infusible 3.11.0 - Brooke Kuhlmann
