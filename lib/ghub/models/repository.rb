@@ -90,13 +90,12 @@ module Ghub
     ) do
       def self.for(**attributes)
         new(
-          **attributes.transform_keys!(size: :weight).merge(
-            license: (License[**Hash(attributes[:license])] if attributes.key? :license),
-            owner: User[**attributes[:owner]],
-            organization: (User[**attributes[:organization]] if attributes.key? :organization),
-            permissions: (
-              Permissions::Repository[**attributes[:permissions]] if attributes.key? :permissions
-            )
+          **attributes.transform_keys!(size: :weight),
+          license: (License[**Hash(attributes[:license])] if attributes.key? :license),
+          owner: User[**attributes[:owner]],
+          organization: (User[**attributes[:organization]] if attributes.key? :organization),
+          permissions: (
+            Permissions::Repository[**attributes[:permissions]] if attributes.key? :permissions
           )
         )
       end
