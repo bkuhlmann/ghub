@@ -8,8 +8,8 @@ module Ghub
       module Actions
         # Handles a repository index action.
         class Index
-          include Ghub::Import[:api]
-          include Repositories::Import[:path, response: "responses.index", model: "models.show"]
+          include Ghub::Dependencies[:api]
+          include Dependencies[:path, response: "responses.index", model: "models.show"]
           include Pipeable
 
           def call kind, owner, **parameters

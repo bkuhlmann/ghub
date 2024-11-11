@@ -8,8 +8,8 @@ module Ghub
       module Actions
         # Handles a repository show action.
         class Show
-          include Ghub::Import[:api]
-          include Repositories::Import[:path, response: "responses.show", model: "models.show"]
+          include Ghub::Dependencies[:api]
+          include Dependencies[:path, response: "responses.show", model: "models.show"]
           include Pipeable
 
           def call owner, id, **parameters

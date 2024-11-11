@@ -6,8 +6,8 @@ module Ghub
       module Protection
         # Provides access to the branch protection API endpoint.
         class Root
-          include Ghub::Import[:api]
-          include Protection::Import[show_action: "actions.show", update_action: "actions.update"]
+          include Ghub::Dependencies[:api]
+          include Dependencies[show_action: "actions.show", update_action: "actions.update"]
 
           def show(...) = show_action.call(...)
 

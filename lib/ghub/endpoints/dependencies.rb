@@ -4,8 +4,6 @@ require "infusible"
 
 module Ghub
   module Endpoints
-    module Pulls
-      Import = Infusible[Container]
-    end
+    Dependencies = Infusible[Container]
   end
 end

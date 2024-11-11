@@ -4,9 +4,9 @@ require "infusible"
 
 module Ghub
   module Endpoints
-    module Branches
-      module Protection
-        Import = Infusible[Container]
+    module Search
+      module Users
+        Dependencies = Infusible[Container]
       end
     end
   end

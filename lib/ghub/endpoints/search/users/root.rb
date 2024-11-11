@@ -6,7 +6,7 @@ module Ghub
       module Users
         # Provides access to the search API endpoint for users.
         class Root
-          include Users::Import[index_action: "actions.index"]
+          include Dependencies[index_action: "actions.index"]
 
           def index(...) = index_action.call(...)
         end

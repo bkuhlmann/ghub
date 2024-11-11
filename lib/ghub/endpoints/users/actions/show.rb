@@ -8,8 +8,8 @@ module Ghub
       module Actions
         # Handles a user show action.
         class Show
-          include Ghub::Import[:api]
-          include Users::Import[response: "responses.show", model: "models.show"]
+          include Ghub::Dependencies[:api]
+          include Dependencies[response: "responses.show", model: "models.show"]
           include Pipeable
 
           def call id, **parameters

@@ -8,9 +8,9 @@ module Ghub
       module Actions
         # Handles a repository create action.
         class Create
-          include Ghub::Import[:api]
+          include Ghub::Dependencies[:api]
 
-          include Import[
+          include Dependencies[
             :path,
             request: "requests.create",
             response: "responses.show",

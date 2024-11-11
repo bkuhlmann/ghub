@@ -9,8 +9,8 @@ module Ghub
         module Actions
           # Handles an organization member index action.
           class Index
-            include Ghub::Import[:api]
-            include Members::Import[response: "responses.index", model: "models.show"]
+            include Ghub::Dependencies[:api]
+            include Dependencies[response: "responses.index", model: "models.show"]
             include Pipeable
 
             def call owner, **parameters

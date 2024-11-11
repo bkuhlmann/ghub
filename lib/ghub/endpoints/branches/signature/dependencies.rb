@@ -6,7 +6,7 @@ module Ghub
   module Endpoints
     module Branches
       module Signature
-        Import = Infusible[Container]
+        Dependencies = Infusible[Container]
       end
     end
   end

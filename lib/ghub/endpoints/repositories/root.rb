@@ -5,9 +5,9 @@ module Ghub
     module Repositories
       # Provides access to the users API endpoint.
       class Root
-        include Ghub::Import[:api]
+        include Ghub::Dependencies[:api]
 
-        include Repositories::Import[
+        include Dependencies[
           create_action: "actions.create",
           index_action: "actions.index",
           patch_action: "actions.patch",

@@ -6,7 +6,7 @@ module Ghub
       module Members
         # Provides access to the organization members API endpoint.
         class Root
-          include Members::Import[index_action: "actions.index"]
+          include Dependencies[index_action: "actions.index"]
 
           def index(...) = index_action.call(...)
         end

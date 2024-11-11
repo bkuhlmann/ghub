@@ -3,7 +3,9 @@
 module Ghub
   # The primary interface for making API requests.
   class Client
-    include Endpoints::Import.public(
+    include Dependencies[:configuration]
+
+    include Endpoints::Dependencies.public(
       :branch_protection,
       :branch_signature,
       :organization_members,
@@ -12,8 +14,6 @@ module Ghub
       :search_users,
       :users
     )
-
-    include Import[:configuration]
 
     def initialize(**)
       super

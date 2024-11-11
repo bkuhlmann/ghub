@@ -3,7 +3,5 @@
 require "infusible"
 
 module Ghub
-  module Endpoints
-    Import = Infusible[Container]
-  end
+  Dependencies = Infusible[Container]
 end
