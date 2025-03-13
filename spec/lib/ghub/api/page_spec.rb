@@ -4,8 +4,6 @@ require "http"
 require "spec_helper"
 
 RSpec.describe Ghub::API::Page do
-  include Dry::Monads[:result]
-
   subject(:page) { described_class.new first }
 
   let :single do
