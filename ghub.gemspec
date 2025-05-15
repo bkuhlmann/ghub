@@ -28,6 +28,7 @@ Gem::Specification.new do |spec|
   spec.add_dependency "dry-schema", "~> 1.13"
   spec.add_dependency "http", "~> 5.2"
   spec.add_dependency "infusible", "~> 4.0"
+  spec.add_dependency "inspectable", "~> 0.3"
   spec.add_dependency "pipeable", "~> 1.1"
   spec.add_dependency "refinements", "~> 13.0"
   spec.add_dependency "zeitwerk", "~> 2.7"
