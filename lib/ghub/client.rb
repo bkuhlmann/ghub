@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+require "inspectable"
+
 module Ghub
   # The primary interface for making API requests.
   class Client
@@ -14,6 +16,16 @@ module Ghub
       :search_users,
       :users
     )
+
+    include Inspectable[
+      branch_protection: :class,
+      branch_signature: :class,
+      organization_members: :class,
+      pulls: :class,
+      repositories: :class,
+      search_users: :class,
+      users: :class
+    ]
 
     def initialize(**)
       super
