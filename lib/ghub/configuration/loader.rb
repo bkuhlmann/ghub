@@ -16,7 +16,7 @@ module Ghub
       def call
         model[
           accept: environment.fetch("GITHUB_API_ACCEPT", "application/vnd.github+json"),
-          paginate: environment.fetch("GITHUB_API_PAGINATE", "false").to_bool,
+          paginate: environment.fetch("GITHUB_API_PAGINATE", "false").truthy?,
           token: environment["GITHUB_API_TOKEN"],
           url: environment.fetch("GITHUB_API_URL", "https://api.github.com")
         ]
