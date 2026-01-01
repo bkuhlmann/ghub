@@ -18,6 +18,7 @@ Bundler.require :tools
 require "dry/monads"
 require "ghub"
 require "http/fake"
+require "inspectable/rspec/matchers/match_inspection"
 require "refinements"
 
 SPEC_ROOT = Pathname(__dir__).realpath.freeze

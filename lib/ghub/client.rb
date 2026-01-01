@@ -18,13 +18,13 @@ module Ghub
     )
 
     include Inspectable[
-      branch_protection: :class,
-      branch_signature: :class,
-      organization_members: :class,
-      pulls: :class,
-      repositories: :class,
-      search_users: :class,
-      users: :class
+      branch_protection: :type,
+      branch_signature: :type,
+      organization_members: :type,
+      pulls: :type,
+      repositories: :type,
+      search_users: :type,
+      users: :type
     ]
 
     def initialize(**)

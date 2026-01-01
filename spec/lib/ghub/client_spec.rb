@@ -79,14 +79,14 @@ RSpec.describe Ghub::Client do
 
   describe "#inspect" do
     it "answers request and reponse as classes" do
-      expect(described_class.new.inspect).to include(
-        "@branch_protection=Ghub::Endpoints::Branches::Protection::Root, " \
-        "@branch_signature=Ghub::Endpoints::Branches::Signature::Root, " \
-        "@organization_members=Ghub::Endpoints::Organizations::Members::Root, " \
-        "@pulls=Ghub::Endpoints::Pulls::Root, " \
-        "@repositories=Ghub::Endpoints::Repositories::Root, " \
-        "@search_users=Ghub::Endpoints::Search::Users::Root, " \
-        "@users=Ghub::Endpoints::Users::Root, "
+      expect(client.inspect).to match_inspection(
+        branch_protection: "Ghub::Endpoints::Branches::Protection::Root",
+        branch_signature: "Ghub::Endpoints::Branches::Signature::Root",
+        organization_members: "Ghub::Endpoints::Organizations::Members::Root",
+        pulls: "Ghub::Endpoints::Pulls::Root",
+        repositories: "Ghub::Endpoints::Repositories::Root",
+        search_users: "Ghub::Endpoints::Search::Users::Root",
+        users: "Ghub::Endpoints::Users::Root"
       )
     end
   end
