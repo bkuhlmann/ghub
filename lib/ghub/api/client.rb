@@ -41,7 +41,7 @@ module Ghub
       def call method, path, **options
         http.auth("Bearer #{configuration.token}")
             .headers(accept: configuration.accept)
-            .public_send(method, "#{configuration.url}/#{path}", options)
+            .public_send(method, "#{configuration.url}/#{path}", **options)
             .then { |response| response.status.success? ? Success(response) : Failure(response) }
       end
     end
