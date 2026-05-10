@@ -7,19 +7,18 @@ RSpec.describe Ghub::Endpoints::Pulls::Actions::Index do
 
   include_context "with application dependencies"
 
+  before { allow(http).to receive_messages(auth: http, headers: http) }
+
   describe "#call" do
     context "with success" do
-      let :http do
-        HTTP::Fake::Client.new do
-          get "/repos/:owner/:repository/pulls" do
-            headers["Content-Type"] = "application/json"
-            status 200
+      before do
+        body = SPEC_ROOT.join("support/fixtures/pulls/index.json").read
+        response = HTTP::Response.new headers: {content_type: "application/json"},
+                                      body:,
+                                      status: 200,
+                                      version: 1.0
 
-            <<~JSON
-              #{SPEC_ROOT.join("support/fixtures/pulls/index.json").read}
-            JSON
-          end
-        end
+        allow(http).to receive(:get).and_return response
       end
 
       it "answers pull request" do
@@ -29,19 +28,13 @@ RSpec.describe Ghub::Endpoints::Pulls::Actions::Index do
     end
 
     context "when not found" do
-      let :http do
-        HTTP::Fake::Client.new do
-          get "/repos/:owner/:repository/pulls" do
-            headers["Content-Type"] = "application/json"
-            status 404
+      before do
+        response = HTTP::Response.new headers: {content_type: "application/json"},
+                                      body: {message: "Not Found"}.to_json,
+                                      status: 404,
+                                      version: 1.0
 
-            <<~JSON
-              {
-                "message": "Not Found"
-              }
-            JSON
-          end
-        end
+        allow(http).to receive(:get).and_return response
       end
 
       it "answers errors" do

@@ -5,22 +5,19 @@ require "spec_helper"
 RSpec.describe Ghub::API::Client do
   subject(:client) { described_class.new http: }
 
+  include_context "with application dependencies"
+
+  before { allow(http).to receive_messages(auth: http, headers: http) }
+
   describe "#get" do
     context "with success" do
-      let :http do
-        HTTP::Fake::Client.new do
-          get "/repos/:user_id/:id" do
-            headers["Content-Type"] = "application/json"
-            status 200
+      before do
+        response = HTTP::Response.new headers: {content_type: "application/json"},
+                                      body: {name: "test", private: false}.to_json,
+                                      status: 200,
+                                      version: 1.0
 
-            <<~JSON
-              {
-                "name": "test",
-                "private": false
-              }
-            JSON
-          end
-        end
+        allow(http).to receive(:get).and_return response
       end
 
       it "answers body" do
@@ -30,24 +27,19 @@ RSpec.describe Ghub::API::Client do
     end
 
     context "with successful pagination (one)" do
-      let :http do
-        HTTP::Fake::Client.new do
-          get "/users/:owner/repos" do
-            headers["Content-Type"] = "application/json"
-            headers["Link"] = "<https://api.github.com/user/0/repos?page=9>; rel=\"prev\", " \
-                              "<https://api.github.com/user/0/repos?page=1>; rel=\"first\""
-            status 200
+      before do
+        response = HTTP::Response.new headers: {
+                                        content_type: "application/json",
+                                        link: "<https://api.github.com/user/0/repos?page=9>; " \
+                                              "rel=\"prev\", " \
+                                              "<https://api.github.com/user/0/repos?page=1>; " \
+                                              "rel=\"first\""
+                                      },
+                                      body: [{name: "test", private: false}].to_json,
+                                      status: 200,
+                                      version: 1.0
 
-            <<~JSON
-              [
-                {
-                  "name": "test",
-                  "private": false
-                }
-              ]
-            JSON
-          end
-        end
+        allow(http).to receive(:get).and_return response
       end
 
       it "answers body" do
@@ -69,24 +61,19 @@ RSpec.describe Ghub::API::Client do
         described_class.new configuration: Ghub::Configuration::Content[paginate: true], http:
       end
 
-      let :http do
-        HTTP::Fake::Client.new do
-          get "/users/:owner/repos" do
-            headers["Content-Type"] = "application/json"
-            headers["Link"] = "<https://api.github.com/user/0/repos?page=9>; rel=\"prev\", " \
-                              "<https://api.github.com/user/0/repos?page=1>; rel=\"first\""
-            status 200
+      before do
+        response = HTTP::Response.new headers: {
+                                        content_type: "application/json",
+                                        link: "<https://api.github.com/user/0/repos?page=9>; " \
+                                              "rel=\"prev\", " \
+                                              "<https://api.github.com/user/0/repos?page=1>; " \
+                                              "rel=\"first\""
+                                      },
+                                      body: [{name: "test", private: false}].to_json,
+                                      status: 200,
+                                      version: 1.0
 
-            <<~JSON
-              [
-                {
-                  "name": "test",
-                  "private": false
-                }
-              ]
-            JSON
-          end
-        end
+        allow(http).to receive(:get).and_return response
       end
 
       it "answers body" do
@@ -104,20 +91,16 @@ RSpec.describe Ghub::API::Client do
     end
 
     context "with failure" do
-      let :http do
-        HTTP::Fake::Client.new do
-          get "/orgs/test/members" do
-            headers["Content-Type"] = "application/json"
-            status 404
+      before do
+        response = HTTP::Response.new headers: {content_type: "application/json"},
+                                      body: {
+                                        message: "Not Found",
+                                        documentation_url: "https://docs.github.com/rest/reference"
+                                      }.to_json,
+                                      status: 404,
+                                      version: 1.0
 
-            <<~JSON
-              {
-                "message": "Not Found",
-                "documentation_url": "https://docs.github.com/rest/reference"
-              }
-            JSON
-          end
-        end
+        allow(http).to receive(:get).and_return response
       end
 
       it "answers error" do
@@ -133,20 +116,13 @@ RSpec.describe Ghub::API::Client do
 
   describe "#post" do
     context "with success" do
-      let :http do
-        HTTP::Fake::Client.new do
-          post "/user/repos" do
-            headers["Content-Type"] = "application/json"
-            status 200
+      before do
+        response = HTTP::Response.new headers: {content_type: "application/json"},
+                                      body: {name: "ghub-test", private: true}.to_json,
+                                      status: 200,
+                                      version: 1.0
 
-            <<~JSON
-              {
-                "name": "ghub-test",
-                "private": true
-              }
-            JSON
-          end
-        end
+        allow(http).to receive(:post).and_return response
       end
 
       it "answers body" do
@@ -156,27 +132,23 @@ RSpec.describe Ghub::API::Client do
     end
 
     context "with failure" do
-      let :http do
-        HTTP::Fake::Client.new do
-          post "/user/repos" do
-            headers["Content-Type"] = "application/json"
-            status 422
+      before do
+        response = HTTP::Response.new headers: {content_type: "application/json"},
+                                      body: {
+                                        message: "Repository creation failed.",
+                                        errors: [
+                                          {
+                                            code: "custom",
+                                            field: "name",
+                                            resource: "Repository",
+                                            message: "name already exists on this account"
+                                          }
+                                        ]
+                                      }.to_json,
+                                      status: 422,
+                                      version: 1.0
 
-            <<~JSON
-              {
-                "message": "Repository creation failed.",
-                "errors": [
-                  {
-                    "code": "custom",
-                    "field": "name",
-                    "resource": "Repository",
-                    "message": "name already exists on this account"
-                  }
-                ]
-              }
-            JSON
-          end
-        end
+        allow(http).to receive(:post).and_return response
       end
 
       it "answers error" do
@@ -199,19 +171,13 @@ RSpec.describe Ghub::API::Client do
 
   describe "#put" do
     context "with success" do
-      let :http do
-        HTTP::Fake::Client.new do
-          put "/repos/:owner/:repository" do
-            headers["Content-Type"] = "application/json"
-            status 200
+      before do
+        response = HTTP::Response.new headers: {content_type: "application/json"},
+                                      body: {homepage: "https://example.com/ghub-test"}.to_json,
+                                      status: 200,
+                                      version: 1.0
 
-            <<~JSON
-              {
-                "homepage": "https://example.com/ghub-test"
-              }
-            JSON
-          end
-        end
+        allow(http).to receive(:put).and_return response
       end
 
       it "answers body" do
@@ -221,19 +187,13 @@ RSpec.describe Ghub::API::Client do
     end
 
     context "when not found" do
-      let :http do
-        HTTP::Fake::Client.new do
-          put "/repos/:owner/:repository" do
-            headers["Content-Type"] = "application/json"
-            status 404
+      before do
+        response = HTTP::Response.new headers: {content_type: "application/json"},
+                                      body: {message: "Not Found"}.to_json,
+                                      status: 404,
+                                      version: 1.0
 
-            <<~JSON
-              {
-                "message": "Not Found"
-              }
-            JSON
-          end
-        end
+        allow(http).to receive(:put).and_return response
       end
 
       it "answers error" do
@@ -245,19 +205,13 @@ RSpec.describe Ghub::API::Client do
 
   describe "#patch" do
     context "with success" do
-      let :http do
-        HTTP::Fake::Client.new do
-          patch "/repos/:owner/:repository" do
-            headers["Content-Type"] = "application/json"
-            status 200
+      before do
+        response = HTTP::Response.new headers: {content_type: "application/json"},
+                                      body: {homepage: "https://example.com/ghub-test"}.to_json,
+                                      status: 200,
+                                      version: 1.0
 
-            <<~JSON
-              {
-                "homepage": "https://example.com/ghub-test"
-              }
-            JSON
-          end
-        end
+        allow(http).to receive(:patch).and_return response
       end
 
       it "answers body" do
@@ -269,19 +223,13 @@ RSpec.describe Ghub::API::Client do
     end
 
     context "when not found" do
-      let :http do
-        HTTP::Fake::Client.new do
-          patch "/repos/:owner/:repository" do
-            headers["Content-Type"] = "application/json"
-            status 404
+      before do
+        response = HTTP::Response.new headers: {content_type: "application/json"},
+                                      body: {message: "Not Found"}.to_json,
+                                      status: 404,
+                                      version: 1.0
 
-            <<~JSON
-              {
-                "message": "Not Found"
-              }
-            JSON
-          end
-        end
+        allow(http).to receive(:patch).and_return response
       end
 
       it "answers error" do
@@ -293,13 +241,13 @@ RSpec.describe Ghub::API::Client do
 
   describe "#delete" do
     context "with success" do
-      let :http do
-        HTTP::Fake::Client.new do
-          delete "/repos/:owner/:repository" do
-            headers["Content-Type"] = "application/json"
-            status 204
-          end
-        end
+      before do
+        response = HTTP::Response.new headers: {content_type: "application/json"},
+                                      body: {}.to_json,
+                                      status: 204,
+                                      version: 1.0
+
+        allow(http).to receive(:delete).and_return response
       end
 
       it "answers body" do
@@ -309,17 +257,13 @@ RSpec.describe Ghub::API::Client do
     end
 
     context "with failure" do
-      let :http do
-        HTTP::Fake::Client.new do
-          delete "/repos/:owner/:repository" do
-            headers["Content-Type"] = "application/json"
-            status 404
+      before do
+        response = HTTP::Response.new headers: {content_type: "application/json"},
+                                      body: {message: "Not Found"}.to_json,
+                                      status: 404,
+                                      version: 1.0
 
-            <<~JSON
-              {"message": "Not Found"}
-            JSON
-          end
-        end
+        allow(http).to receive(:delete).and_return response
       end
 
       it "answers error" do

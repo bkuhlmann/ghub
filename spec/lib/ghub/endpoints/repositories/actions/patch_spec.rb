@@ -7,16 +7,18 @@ RSpec.describe Ghub::Endpoints::Repositories::Actions::Patch do
 
   include_context "with application dependencies"
 
+  before { allow(http).to receive_messages(auth: http, headers: http) }
+
   describe "#call" do
     context "with user" do
-      let :http do
-        HTTP::Fake::Client.new do
-          patch "/repos/:owner/:id" do
-            headers["Content-Type"] = "application/json"
-            status 200
-            SPEC_ROOT.join("support/fixtures/repositories/create_or_patch.json").read
-          end
-        end
+      before do
+        body = SPEC_ROOT.join("support/fixtures/repositories/create_or_patch.json").read
+        response = HTTP::Response.new headers: {content_type: "application/json"},
+                                      body:,
+                                      status: 200,
+                                      version: 1.0
+
+        allow(http).to receive(:patch).and_return response
       end
 
       it "answers success" do
@@ -30,14 +32,14 @@ RSpec.describe Ghub::Endpoints::Repositories::Actions::Patch do
     end
 
     context "with organization" do
-      let :http do
-        HTTP::Fake::Client.new do
-          patch "/repos/:owner/:id" do
-            headers["Content-Type"] = "application/json"
-            status 201
-            SPEC_ROOT.join("support/fixtures/repositories/create_or_patch.json").read
-          end
-        end
+      before do
+        body = SPEC_ROOT.join("support/fixtures/repositories/create_or_patch.json").read
+        response = HTTP::Response.new headers: {content_type: "application/json"},
+                                      body:,
+                                      status: 200,
+                                      version: 1.0
+
+        allow(http).to receive(:patch).and_return response
       end
 
       it "answers success" do
@@ -51,14 +53,13 @@ RSpec.describe Ghub::Endpoints::Repositories::Actions::Patch do
     end
 
     context "when empty" do
-      let :http do
-        HTTP::Fake::Client.new do
-          patch "/repos/:owner/:id" do
-            headers["Content-Type"] = "application/json"
-            status 200
-            {}
-          end
-        end
+      before do
+        response = HTTP::Response.new headers: {content_type: "application/json"},
+                                      body: {}.to_json,
+                                      status: 200,
+                                      version: 1.0
+
+        allow(http).to receive(:patch).and_return response
       end
 
       it "answers errors" do
@@ -68,19 +69,13 @@ RSpec.describe Ghub::Endpoints::Repositories::Actions::Patch do
     end
 
     context "when not found" do
-      let :http do
-        HTTP::Fake::Client.new do
-          patch "/repos/:owner/:id" do
-            headers["Content-Type"] = "application/json"
-            status 404
+      before do
+        response = HTTP::Response.new headers: {content_type: "application/json"},
+                                      body: {message: "Not Found"}.to_json,
+                                      status: 404,
+                                      version: 1.0
 
-            <<~JSON
-              {
-                "message": "Not Found"
-              }
-            JSON
-          end
-        end
+        allow(http).to receive(:patch).and_return response
       end
 
       it "answers error" do

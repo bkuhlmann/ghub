@@ -10,18 +10,17 @@ RSpec.describe Ghub::Endpoints::Pulls::Root do
   let(:index_action) { Ghub::Endpoints::Pulls::Actions::Index.new api: }
   let(:show_action) { Ghub::Endpoints::Pulls::Actions::Show.new api: }
 
-  describe "#index" do
-    let :http do
-      HTTP::Fake::Client.new do
-        get "/repos/:owner/:repository/pulls" do
-          headers["Content-Type"] = "application/json"
-          status 200
+  before { allow(http).to receive_messages(auth: http, headers: http) }
 
-          <<~JSON
-            #{SPEC_ROOT.join("support/fixtures/pulls/index.json").read}
-          JSON
-        end
-      end
+  describe "#index" do
+    before do
+      body = SPEC_ROOT.join("support/fixtures/pulls/index.json").read
+      response = HTTP::Response.new headers: {content_type: "application/json"},
+                                    body:,
+                                    status: 200,
+                                    version: 1.0
+
+      allow(http).to receive(:get).and_return response
     end
 
     it "answers pull requests" do
@@ -31,17 +30,14 @@ RSpec.describe Ghub::Endpoints::Pulls::Root do
   end
 
   describe "#show" do
-    let :http do
-      HTTP::Fake::Client.new do
-        get "/repos/:owner/:repository/pulls/:id" do
-          headers["Content-Type"] = "application/json"
-          status 200
+    before do
+      body = SPEC_ROOT.join("support/fixtures/pulls/show.json").read
+      response = HTTP::Response.new headers: {content_type: "application/json"},
+                                    body:,
+                                    status: 200,
+                                    version: 1.0
 
-          <<~JSON
-            #{SPEC_ROOT.join("support/fixtures/pulls/show.json").read}
-          JSON
-        end
-      end
+      allow(http).to receive(:get).and_return response
     end
 
     it "answers pull request" do

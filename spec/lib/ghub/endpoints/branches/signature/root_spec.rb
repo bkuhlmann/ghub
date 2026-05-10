@@ -7,21 +7,20 @@ RSpec.describe Ghub::Endpoints::Branches::Signature::Root do
 
   include_context "with application dependencies"
 
-  describe "#show" do
-    let :http do
-      HTTP::Fake::Client.new do
-        get "/repos/:owner/:repository_id/branches/:id/protection/required_signatures" do
-          headers["Content-Type"] = "application/json"
-          status 200
+  before { allow(http).to receive_messages(auth: http, headers: http) }
 
-          <<~JSON
-            {
-              "url": "https://api.github.com/repos/bkuhlmann/test/branches/main/protection/required_signatures",
-              "enabled": true
-            }
-          JSON
-        end
-      end
+  describe "#show" do
+    before do
+      response = HTTP::Response.new headers: {content_type: "application/json"},
+                                    body: {
+                                      url: "https://api.github.com/repos/bkuhlmann/test" \
+                                           "/branches/main/protection/required_signatures",
+                                      enabled: true
+                                    }.to_json,
+                                    status: 200,
+                                    version: 1.0
+
+      allow(http).to receive(:get).and_return response
     end
 
     it "answers pull request" do
@@ -31,20 +30,17 @@ RSpec.describe Ghub::Endpoints::Branches::Signature::Root do
   end
 
   describe "#create" do
-    let :http do
-      HTTP::Fake::Client.new do
-        post "/repos/:owner/:repository_id/branches/:id/protection/required_signatures" do
-          headers["Content-Type"] = "application/json"
-          status 200
+    before do
+      response = HTTP::Response.new headers: {content_type: "application/json"},
+                                    body: {
+                                      url: "https://api.github.com/repos/bkuhlmann/test" \
+                                           "/branches/main/protection/required_signatures",
+                                      enabled: true
+                                    }.to_json,
+                                    status: 200,
+                                    version: 1.0
 
-          <<~JSON
-            {
-              "url": "https://api.github.com/repos/bkuhlmann/test/branches/main/protection/required_signatures",
-              "enabled": true
-            }
-          JSON
-        end
-      end
+      allow(http).to receive(:post).and_return response
     end
 
     it "answers pull request" do
@@ -55,13 +51,12 @@ RSpec.describe Ghub::Endpoints::Branches::Signature::Root do
 
   describe "#destroy" do
     context "with success" do
-      let :http do
-        HTTP::Fake::Client.new do
-          delete "/repos/:owner/:repository_id/branches/:id/protection/required_signatures" do
-            headers["Content-Type"] = "application/json"
-            status 204
-          end
-        end
+      before do
+        response = HTTP::Response.new headers: {content_type: "application/json"},
+                                      status: 204,
+                                      version: 1.0
+
+        allow(http).to receive(:delete).and_return response
       end
 
       it "answers no content" do
@@ -71,17 +66,13 @@ RSpec.describe Ghub::Endpoints::Branches::Signature::Root do
     end
 
     context "with failure" do
-      let :http do
-        HTTP::Fake::Client.new do
-          delete "/repos/:owner/:repository_id/branches/:id/protection/required_signatures" do
-            headers["Content-Type"] = "application/json"
-            status 404
+      before do
+        response = HTTP::Response.new headers: {content_type: "application/json"},
+                                      body: {message: "Not Found"}.to_json,
+                                      status: 404,
+                                      version: 1.0
 
-            <<~JSON
-              {"message": "Not Found"}
-            JSON
-          end
-        end
+        allow(http).to receive(:delete).and_return response
       end
 
       it "answers error" do

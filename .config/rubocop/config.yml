@@ -4,6 +4,10 @@ inherit_gem:
 Metrics/AbcSize:
   Exclude:
     - "lib/ghub/endpoints/pulls/models/show.rb"
+Metrics/CollectionLiteralLength:
+  Exclude:
+    - spec/lib/ghub/endpoints/users/actions/show_spec.rb
+    - spec/lib/ghub/endpoints/users/root_spec.rb
 Metrics/MethodLength:
   Exclude:
     - "lib/ghub/endpoints/branches/protection/models/show.rb"

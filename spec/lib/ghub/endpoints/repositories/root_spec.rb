@@ -14,18 +14,17 @@ RSpec.describe Ghub::Endpoints::Repositories::Root do
   let(:patch_action) { Ghub::Endpoints::Repositories::Actions::Patch.new api: }
   let(:show_action) { Ghub::Endpoints::Repositories::Actions::Show.new api: }
 
-  describe "#index" do
-    let :http do
-      HTTP::Fake::Client.new do
-        get "/users/:owner/repos" do
-          headers["Content-Type"] = "application/json"
-          status 200
+  before { allow(http).to receive_messages(auth: http, headers: http) }
 
-          <<~JSON
-            [#{SPEC_ROOT.join("support/fixtures/repositories/show-user.json").read}]
-          JSON
-        end
-      end
+  describe "#index" do
+    before do
+      body = [JSON(SPEC_ROOT.join("support/fixtures/repositories/show-user.json").read)].to_json
+      response = HTTP::Response.new headers: {content_type: "application/json"},
+                                    body:,
+                                    status: 200,
+                                    version: 1.0
+
+      allow(http).to receive(:get).and_return response
     end
 
     it "answers success" do
@@ -35,14 +34,14 @@ RSpec.describe Ghub::Endpoints::Repositories::Root do
   end
 
   describe "#show" do
-    let :http do
-      HTTP::Fake::Client.new do
-        get "/repos/:owner/:id" do
-          headers["Content-Type"] = "application/json"
-          status 200
-          SPEC_ROOT.join("support/fixtures/repositories/show-user.json").read
-        end
-      end
+    before do
+      body = SPEC_ROOT.join("support/fixtures/repositories/show-user.json").read
+      response = HTTP::Response.new headers: {content_type: "application/json"},
+                                    body:,
+                                    status: 200,
+                                    version: 1.0
+
+      allow(http).to receive(:get).and_return response
     end
 
     it "answers success" do
@@ -52,14 +51,14 @@ RSpec.describe Ghub::Endpoints::Repositories::Root do
   end
 
   describe "#create" do
-    let :http do
-      HTTP::Fake::Client.new do
-        post "/user/repos" do
-          headers["Content-Type"] = "application/json"
-          status 201
-          SPEC_ROOT.join("support/fixtures/repositories/create_or_patch.json").read
-        end
-      end
+    before do
+      body = SPEC_ROOT.join("support/fixtures/repositories/create_or_patch.json").read
+      response = HTTP::Response.new headers: {content_type: "application/json"},
+                                    body:,
+                                    status: 201,
+                                    version: 1.0
+
+      allow(http).to receive(:post).and_return response
     end
 
     it "answers success" do
@@ -69,14 +68,14 @@ RSpec.describe Ghub::Endpoints::Repositories::Root do
   end
 
   describe "#patch" do
-    let :http do
-      HTTP::Fake::Client.new do
-        patch "/repos/:owner/:id" do
-          headers["Content-Type"] = "application/json"
-          status 200
-          SPEC_ROOT.join("support/fixtures/repositories/create_or_patch.json").read
-        end
-      end
+    before do
+      body = SPEC_ROOT.join("support/fixtures/repositories/create_or_patch.json").read
+      response = HTTP::Response.new headers: {content_type: "application/json"},
+                                    body:,
+                                    status: 200,
+                                    version: 1.0
+
+      allow(http).to receive(:patch).and_return response
     end
 
     it "answers success" do
@@ -88,13 +87,13 @@ RSpec.describe Ghub::Endpoints::Repositories::Root do
 
   describe "#destroy" do
     context "with success" do
-      let :http do
-        HTTP::Fake::Client.new do
-          delete "/repos/:owner/:id" do
-            headers["Content-Type"] = "application/json"
-            status 204
-          end
-        end
+      before do
+        response = HTTP::Response.new headers: {content_type: "application/json"},
+                                      body: {}.to_json,
+                                      status: 204,
+                                      version: 1.0
+
+        allow(http).to receive(:delete).and_return response
       end
 
       it "answers no content" do
@@ -104,17 +103,13 @@ RSpec.describe Ghub::Endpoints::Repositories::Root do
     end
 
     context "with failure" do
-      let :http do
-        HTTP::Fake::Client.new do
-          delete "/repos/:owner/:id" do
-            headers["Content-Type"] = "application/json"
-            status 404
+      before do
+        response = HTTP::Response.new headers: {content_type: "application/json"},
+                                      body: {message: "Not Found"}.to_json,
+                                      status: 404,
+                                      version: 1.0
 
-            <<~JSON
-              {"message": "Not Found"}
-            JSON
-          end
-        end
+        allow(http).to receive(:delete).and_return response
       end
 
       it "answers error" do

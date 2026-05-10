@@ -7,40 +7,40 @@ RSpec.describe Ghub::Endpoints::Organizations::Members::Actions::Index do
 
   include_context "with application dependencies"
 
+  before { allow(http).to receive_messages(auth: http, headers: http) }
+
   describe "#index" do
     context "with success" do
-      let :http do
-        HTTP::Fake::Client.new do
-          get "/orgs/:owner/members" do
-            headers["Content-Type"] = "application/json"
-            status 200
+      before do
+        response = HTTP::Response.new(
+          headers: {content_type: "application/json"},
+          body: [
+            {
+              avatar_url: "https://avatars.githubusercontent.com/u/50245?v=4",
+              events_url: "https://api.github.com/users/bkuhlmann/events{/privacy}",
+              followers_url: "https://api.github.com/users/bkuhlmann/followers",
+              following_url: "https://api.github.com/users/bkuhlmann/following{/other_user}",
+              gists_url: "https://api.github.com/users/bkuhlmann/gists{/gist_id}",
+              gravatar_id: nil,
+              html_url: "https://github.com/bkuhlmann",
+              id: 50245,
+              login: "bkuhlmann",
+              node_id: "MDQ6VXNlcjUwMjQ1",
+              organizations_url: "https://api.github.com/users/bkuhlmann/orgs",
+              received_events_url: "https://api.github.com/users/bkuhlmann/received_events",
+              repos_url: "https://api.github.com/users/bkuhlmann/repos",
+              site_admin: false,
+              starred_url: "https://api.github.com/users/bkuhlmann/starred{/owner}{/repo}",
+              subscriptions_url: "https://api.github.com/users/bkuhlmann/subscriptions",
+              type: "User",
+              url: "https://api.github.com/users/bkuhlmann"
+            }
+          ].to_json,
+          status: 200,
+          version: 1.0
+        )
 
-            <<~JSON
-              [
-                {
-                  "avatar_url": "https://avatars.githubusercontent.com/u/50245?v=4",
-                  "events_url": "https://api.github.com/users/bkuhlmann/events{/privacy}",
-                  "followers_url": "https://api.github.com/users/bkuhlmann/followers",
-                  "following_url": "https://api.github.com/users/bkuhlmann/following{/other_user}",
-                  "gists_url": "https://api.github.com/users/bkuhlmann/gists{/gist_id}",
-                  "gravatar_id": null,
-                  "html_url": "https://github.com/bkuhlmann",
-                  "id": 50245,
-                  "login": "bkuhlmann",
-                  "node_id": "MDQ6VXNlcjUwMjQ1",
-                  "organizations_url": "https://api.github.com/users/bkuhlmann/orgs",
-                  "received_events_url": "https://api.github.com/users/bkuhlmann/received_events",
-                  "repos_url": "https://api.github.com/users/bkuhlmann/repos",
-                  "site_admin": false,
-                  "starred_url": "https://api.github.com/users/bkuhlmann/starred{/owner}{/repo}",
-                  "subscriptions_url": "https://api.github.com/users/bkuhlmann/subscriptions",
-                  "type": "User",
-                  "url": "https://api.github.com/users/bkuhlmann"
-                }
-              ]
-            JSON
-          end
-        end
+        allow(http).to receive(:get).and_return response
       end
 
       it "answers success" do
@@ -50,19 +50,13 @@ RSpec.describe Ghub::Endpoints::Organizations::Members::Actions::Index do
     end
 
     context "when not found" do
-      let :http do
-        HTTP::Fake::Client.new do
-          get "/orgs/:owner/members" do
-            headers["Content-Type"] = "application/json"
-            status 404
+      before do
+        response = HTTP::Response.new headers: {content_type: "application/json"},
+                                      body: {message: "Not Found"}.to_json,
+                                      status: 404,
+                                      version: 1.0
 
-            <<~JSON
-              {
-                "message": "Not Found"
-              }
-            JSON
-          end
-        end
+        allow(http).to receive(:get).and_return response
       end
 
       it "answers errors" do

@@ -7,16 +7,14 @@ RSpec.describe Ghub::API::Page do
   subject(:page) { described_class.new first }
 
   let :single do
-    HTTP::Response.new request: HTTP::Request.new(verb: :get, uri: "https://www.example.com"),
-                       headers: {"Content-Type" => "application/json"},
+    HTTP::Response.new headers: {"Content-Type" => "application/json"},
                        body: {label: "Last"}.to_json,
                        status: 200,
                        version: "1.1"
   end
 
   let :first do
-    HTTP::Response.new request: HTTP::Request.new(verb: :get, uri: "https://api.github.com"),
-                       headers: {
+    HTTP::Response.new headers: {
                          "Content-Type" => "application/json",
                          "Link" => "<https://api.github.com/user/0/repos?page=2>; rel=\"next\", " \
                                    "<https://api.github.com/user/0/repos?page=10>; rel=\"last\""
@@ -27,8 +25,7 @@ RSpec.describe Ghub::API::Page do
   end
 
   let :last do
-    HTTP::Response.new request: HTTP::Request.new(verb: :get, uri: "https://www.example.com"),
-                       headers: {
+    HTTP::Response.new headers: {
                          "Content-Type" => "application/json",
                          "Link" => "<https://api.github.com/user/0/repos?page=9>; rel=\"prev\", " \
                                    "<https://api.github.com/user/0/repos?page=1>; rel=\"first\""
@@ -59,7 +56,7 @@ RSpec.describe Ghub::API::Page do
     end
 
     it "answers zero when link doesn't exists" do
-      first["Link"] = nil
+      first.headers["Link"] = nil
       expect(page.next).to eq(0)
     end
 
@@ -76,7 +73,7 @@ RSpec.describe Ghub::API::Page do
     end
 
     it "answers true request header link doesn't exist" do
-      first["Link"] = nil
+      first.headers["Link"] = nil
       expect(page.last?).to be(true)
     end
 
@@ -101,7 +98,6 @@ RSpec.describe Ghub::API::Page do
       result = page.to_response body
 
       expect(result).to have_attributes(
-        request: kind_of(HTTP::Request),
         headers: {
           "Content-Type" => "application/json",
           "Link" => "<https://api.github.com/user/0/repos?page=2>; rel=\"next\", " \

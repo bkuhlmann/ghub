@@ -10,18 +10,17 @@ RSpec.describe Ghub::Endpoints::Branches::Protection::Root do
   let(:show_action) { Ghub::Endpoints::Branches::Protection::Actions::Show.new api: }
   let(:update_action) { Ghub::Endpoints::Branches::Protection::Actions::Update.new api: }
 
-  describe "#show" do
-    let :http do
-      HTTP::Fake::Client.new do
-        get "/repos/:owner/:repository/branches/:branch/protection" do
-          headers["Content-Type"] = "application/json"
-          status 200
+  before { allow(http).to receive_messages(auth: http, headers: http) }
 
-          <<~JSON
-            #{SPEC_ROOT.join("support/fixtures/branches/show.json").read}
-          JSON
-        end
-      end
+  describe "#show" do
+    before do
+      body = SPEC_ROOT.join("support/fixtures/branches/show.json").read
+      response = HTTP::Response.new headers: {content_type: "application/json"},
+                                    body:,
+                                    status: 200,
+                                    version: 1.0
+
+      allow(http).to receive(:get).and_return(response)
     end
 
     it "answers pull request" do
@@ -31,14 +30,14 @@ RSpec.describe Ghub::Endpoints::Branches::Protection::Root do
   end
 
   describe "#update" do
-    let :http do
-      HTTP::Fake::Client.new do
-        put "/repos/:owner/:repository/branches/:branch/protection" do
-          headers["Content-Type"] = "application/json"
-          status 200
-          SPEC_ROOT.join("support/fixtures/branches/show.json").read
-        end
-      end
+    before do
+      body = SPEC_ROOT.join("support/fixtures/branches/show.json").read
+      response = HTTP::Response.new headers: {content_type: "application/json"},
+                                    body:,
+                                    status: 200,
+                                    version: 1.0
+
+      allow(http).to receive(:put).and_return(response)
     end
 
     it "answers success" do
@@ -64,13 +63,12 @@ RSpec.describe Ghub::Endpoints::Branches::Protection::Root do
 
   describe "#destroy" do
     context "with success" do
-      let :http do
-        HTTP::Fake::Client.new do
-          delete "/repos/:owner/:repository/branches/:branch/protection" do
-            headers["Content-Type"] = "application/json"
-            status 204
-          end
-        end
+      before do
+        response = HTTP::Response.new headers: {content_type: "application/json"},
+                                      status: 204,
+                                      version: 1.0
+
+        allow(http).to receive(:delete).and_return(response)
       end
 
       it "answers no content" do
@@ -80,17 +78,13 @@ RSpec.describe Ghub::Endpoints::Branches::Protection::Root do
     end
 
     context "with failure" do
-      let :http do
-        HTTP::Fake::Client.new do
-          delete "/repos/:owner/:repository/branches/:branch/protection" do
-            headers["Content-Type"] = "application/json"
-            status 404
+      before do
+        response = HTTP::Response.new headers: {content_type: "application/json"},
+                                      body: {message: "Not Found"}.to_json,
+                                      status: 404,
+                                      version: 1.0
 
-            <<~JSON
-              {"message": "Not Found"}
-            JSON
-          end
-        end
+        allow(http).to receive(:delete).and_return(response)
       end
 
       it "answers error" do

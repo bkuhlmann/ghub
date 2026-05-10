@@ -7,19 +7,18 @@ RSpec.describe Ghub::Endpoints::Repositories::Actions::Index do
 
   include_context "with application dependencies"
 
+  before { allow(http).to receive_messages(auth: http, headers: http) }
+
   describe "#call" do
     context "with user" do
-      let :http do
-        HTTP::Fake::Client.new do
-          get "/users/:owner/repos" do
-            headers["Content-Type"] = "application/json"
-            status 200
+      before do
+        body = [JSON(SPEC_ROOT.join("support/fixtures/repositories/show-user.json").read)].to_json
+        response = HTTP::Response.new headers: {content_type: "application/json"},
+                                      body:,
+                                      status: 200,
+                                      version: 1.0
 
-            <<~JSON
-              [#{SPEC_ROOT.join("support/fixtures/repositories/show-user.json").read}]
-            JSON
-          end
-        end
+        allow(http).to receive(:get).and_return response
       end
 
       it "answers success" do
@@ -29,22 +28,18 @@ RSpec.describe Ghub::Endpoints::Repositories::Actions::Index do
     end
 
     context "with organization" do
-      let :http do
-        HTTP::Fake::Client.new do
-          get "/orgs/:owner/repos" do
-            headers["Content-Type"] = "application/json"
-            status 200
+      before do
+        body = SPEC_ROOT.join("support/fixtures/repositories/show-organization.json")
+                        .read
+                        .then { [JSON(it)] }
+                        .to_json
 
-            <<~JSON
-              [
-                #{Bundler.root
-                         .join("spec/support/fixtures/repositories/show-organization.json")
-                         .read
-                }
-              ]
-            JSON
-          end
-        end
+        response = HTTP::Response.new headers: {content_type: "application/json"},
+                                      body:,
+                                      status: 200,
+                                      version: 1.0
+
+        allow(http).to receive(:get).and_return response
       end
 
       it "answers success" do
@@ -54,19 +49,13 @@ RSpec.describe Ghub::Endpoints::Repositories::Actions::Index do
     end
 
     context "when not found" do
-      let :http do
-        HTTP::Fake::Client.new do
-          get "/users/:owner/repos" do
-            headers["Content-Type"] = "application/json"
-            status 404
+      before do
+        response = HTTP::Response.new headers: {content_type: "application/json"},
+                                      body: {message: "Not Found"}.to_json,
+                                      status: 404,
+                                      version: 1.0
 
-            <<~JSON
-              {
-                "message": "Not Found"
-              }
-            JSON
-          end
-        end
+        allow(http).to receive(:get).and_return response
       end
 
       it "answers error" do

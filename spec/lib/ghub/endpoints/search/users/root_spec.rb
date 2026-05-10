@@ -9,45 +9,45 @@ RSpec.describe Ghub::Endpoints::Search::Users::Root do
 
   let(:index_action) { Ghub::Endpoints::Search::Users::Actions::Index.new api: }
 
+  before { allow(http).to receive_messages(auth: http, headers: http) }
+
   describe "#index" do
     context "with success" do
-      let :http do
-        HTTP::Fake::Client.new do
-          get "/search/users" do
-            headers["Content-Type"] = "application/json"
-            status 200
-
-            <<~JSON
+      before do
+        response = HTTP::Response.new(
+          headers: {content_type: "application/json"},
+          body: {
+            total_count: 1,
+            incomplete_results: false,
+            items: [
               {
-                "total_count": 3,
-                "incomplete_results": false,
-                "items": [
-                  {
-                    "login": "mojombo",
-                    "id": 1,
-                    "node_id": "MDQ6VXNlcjE=",
-                    "avatar_url": "https://avatars.githubusercontent.com/u/1?v=4",
-                    "gravatar_id": "",
-                    "url": "https://api.github.com/users/mojombo",
-                    "html_url": "https://github.com/mojombo",
-                    "followers_url": "https://api.github.com/users/mojombo/followers",
-                    "following_url": "https://api.github.com/users/mojombo/following{/other_user}",
-                    "gists_url": "https://api.github.com/users/mojombo/gists{/gist_id}",
-                    "starred_url": "https://api.github.com/users/mojombo/starred{/owner}{/repo}",
-                    "subscriptions_url": "https://api.github.com/users/mojombo/subscriptions",
-                    "organizations_url": "https://api.github.com/users/mojombo/orgs",
-                    "repos_url": "https://api.github.com/users/mojombo/repos",
-                    "events_url": "https://api.github.com/users/mojombo/events{/privacy}",
-                    "received_events_url": "https://api.github.com/users/mojombo/received_events",
-                    "type": "User",
-                    "site_admin": false,
-                    "score": 1.0
-                  }
-                ]
+                avatar_url: "https://avatars.githubusercontent.com/u/1?v=4",
+                events_url: "https://api.github.com/users/mojombo/events{/privacy}",
+                followers_url: "https://api.github.com/users/mojombo/followers",
+                following_url: "https://api.github.com/users/mojombo/following{/other_user}",
+                gists_url: "https://api.github.com/users/mojombo/gists{/gist_id}",
+                gravatar_id: "",
+                html_url: "https://github.com/mojombo",
+                id: 1,
+                login: "mojombo",
+                node_id: "MDQ6VXNlcjE",
+                organizations_url: "https://api.github.com/users/mojombo/orgs",
+                received_events_url: "https://api.github.com/users/mojombo/received_events",
+                repos_url: "https://api.github.com/users/mojombo/repos",
+                score: 1.0,
+                site_admin: false,
+                starred_url: "https://api.github.com/users/mojombo/starred{/owner}{/repo}",
+                subscriptions_url: "https://api.github.com/users/mojombo/subscriptions",
+                type: "User",
+                url: "https://api.github.com/users/mojombo"
               }
-            JSON
-          end
-        end
+            ]
+          }.to_json,
+          status: 200,
+          version: 1.0
+        )
+
+        allow(http).to receive(:get).and_return response
       end
 
       it "answers success" do
@@ -57,21 +57,17 @@ RSpec.describe Ghub::Endpoints::Search::Users::Root do
     end
 
     context "with failure" do
-      let :http do
-        HTTP::Fake::Client.new do
-          get "/search/users" do
-            headers["Content-Type"] = "application/json"
-            status 200
+      before do
+        response = HTTP::Response.new headers: {content_type: "application/json"},
+                                      body: {
+                                        total_count: 0,
+                                        incomplete_results: false,
+                                        items: []
+                                      }.to_json,
+                                      status: 200,
+                                      version: 1.0
 
-            <<~JSON
-              {
-                "total_count": 0,
-                "incomplete_results": false,
-                "items": []
-              }
-            JSON
-          end
-        end
+        allow(http).to receive(:get).and_return response
       end
 
       it "answers errors" do
