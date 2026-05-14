@@ -104,6 +104,14 @@ module Ghub
         super
         freeze
       end
+
+      def archived? = archived == true
+
+      def forked? = fork == true
+
+      def private? = private == true
+
+      def sharable? = !(archived? || forked? || private?)
     end
   end
 end
