@@ -13,7 +13,7 @@ module Ghub
       :commits,
       :statuses
     ) do
-      def self.for(**attributes)
+      def self.for **attributes
         attributes.reduce({}) { |collection, (key, value)| collection.merge key => Link[**value] }
                   .then { |updates| new(**updates) }
       end

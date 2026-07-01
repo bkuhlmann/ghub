@@ -11,7 +11,7 @@ module Ghub
       :checks,
       :enforcement_level
     ) do
-      def self.for(**attributes)
+      def self.for **attributes
         new(
           **attributes.merge!(checks: attributes[:checks].map { |arguments| Check[**arguments] })
         )

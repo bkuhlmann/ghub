@@ -17,7 +17,7 @@ module Ghub
       :slug,
       :updated_at
     ) do
-      def self.for(**attributes)
+      def self.for **attributes
         new(
           **attributes.merge!(
             owner: Owner[**attributes[:owner]],

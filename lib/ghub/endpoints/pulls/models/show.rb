@@ -55,7 +55,7 @@ module Ghub
           :url,
           :user
         ) do
-          def self.for(**attributes)
+          def self.for **attributes
             assignee = attributes[:assignee]
 
             new(

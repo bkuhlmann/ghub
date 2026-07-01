@@ -19,7 +19,7 @@ module Ghub
             :restrictions,
             :url
           ) do
-            def self.for(**attributes)
+            def self.for **attributes
               new(
                 **attributes.merge!(
                   enforce_admins: Ghub::Models::BooleanLink[**attributes[:enforce_admins]],

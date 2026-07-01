@@ -88,7 +88,7 @@ module Ghub
       :web_commit_signoff_required,
       :weight
     ) do
-      def self.for(**attributes)
+      def self.for **attributes
         new(
           **attributes.transform_keys!(size: :weight),
           license: (License[**Hash(attributes[:license])] if attributes.key? :license),

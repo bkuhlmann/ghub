@@ -10,7 +10,7 @@ module Ghub
       :url,
       :dismissal_restrictions
     ) do
-      def self.for(**attributes)
+      def self.for **attributes
         return new if attributes.empty?
 
         new(

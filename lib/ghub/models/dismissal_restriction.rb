@@ -11,7 +11,7 @@ module Ghub
       :users,
       :users_url
     ) do
-      def self.for(**attributes)
+      def self.for **attributes
         return new if attributes.empty?
 
         new(
