@@ -3,11 +3,13 @@
 require "dry/monads"
 require "json"
 require "refinements/array"
+require "rfc/web/link"
 
 module Ghub
   module API
     # Represents a page of an API response.
     class Page
+      include Dependencies[:configuration, :web_link]
       extend Dry::Monads[:result]
 
       using Refinements::Array
@@ -24,8 +26,9 @@ module Ghub
                     end
       end
 
-      def initialize response
+      def initialize(response, **)
         @response = response
+        super(**)
       end
 
       def next = navigation __method__
@@ -48,12 +51,13 @@ module Ghub
 
       attr_reader :response
 
-      def navigation target
-        links.find { |link| link.include? target.to_s }
-             .then { |link| String(link)[/page=(?<page>\d+)/, :page].to_i }
-      end
+      def navigation direction
+        link = web_link.call(response.headers).find do |link|
+          link.find_pair key: /rel/, value: direction.to_s
+        end
 
-      def links = String(response.headers["Link"]).split ", "
+        link ? link.uri[/page=(?<page>\d+)/, :page].to_i : 0
+      end
     end
   end
 end
