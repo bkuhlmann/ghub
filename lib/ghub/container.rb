@@ -2,6 +2,7 @@
 
 require "containable"
 require "http"
+require "rfc/web/link"
 
 module Ghub
   # Defines application dependencies.
@@ -11,5 +12,6 @@ module Ghub
     register(:configuration) { Configuration::Loader.new.call }
     register :http, HTTP
     register(:api) { API::Client.new }
+    register(:web_link) { RFC::Web::Link.new }
   end
 end
