@@ -7,7 +7,7 @@ RSpec.describe Ghub::API::Page do
   subject(:page) { described_class.new first }
 
   let :single do
-    HTTP::Response.new headers: {"Content-Type" => "application/json"},
+    HTTP::Response.new headers: {"content-type" => "application/json"},
                        body: {label: "Last"}.to_json,
                        status: 200,
                        version: "1.1"
@@ -15,8 +15,8 @@ RSpec.describe Ghub::API::Page do
 
   let :first do
     HTTP::Response.new headers: {
-                         "Content-Type" => "application/json",
-                         "Link" => "<https://api.github.com/user/0/repos?page=2>; rel=\"next\", " \
+                         "content-type" => "application/json",
+                         "link" => "<https://api.github.com/user/0/repos?page=2>; rel=\"next\", " \
                                    "<https://api.github.com/user/0/repos?page=10>; rel=\"last\""
                        },
                        body: [{label: "First"}].to_json,
@@ -26,8 +26,8 @@ RSpec.describe Ghub::API::Page do
 
   let :last do
     HTTP::Response.new headers: {
-                         "Content-Type" => "application/json",
-                         "Link" => "<https://api.github.com/user/0/repos?page=9>; rel=\"prev\", " \
+                         "content-type" => "application/json",
+                         "link" => "<https://api.github.com/user/0/repos?page=9>; rel=\"prev\", " \
                                    "<https://api.github.com/user/0/repos?page=1>; rel=\"first\""
                        },
                        body: [{label: "Last"}].to_json,
@@ -56,7 +56,7 @@ RSpec.describe Ghub::API::Page do
     end
 
     it "answers zero when link doesn't exists" do
-      first.headers["Link"] = nil
+      first.headers["link"] = nil
       expect(page.next).to eq(0)
     end
 
@@ -73,7 +73,7 @@ RSpec.describe Ghub::API::Page do
     end
 
     it "answers true request header link doesn't exist" do
-      first.headers["Link"] = nil
+      first.headers["link"] = nil
       expect(page.last?).to be(true)
     end
 
@@ -99,8 +99,8 @@ RSpec.describe Ghub::API::Page do
 
       expect(result).to have_attributes(
         headers: {
-          "Content-Type" => "application/json",
-          "Link" => "<https://api.github.com/user/0/repos?page=2>; rel=\"next\", " \
+          "content-type" => "application/json",
+          "link" => "<https://api.github.com/user/0/repos?page=2>; rel=\"next\", " \
                     "<https://api.github.com/user/0/repos?page=10>; rel=\"last\""
         },
         body: body.to_json,
