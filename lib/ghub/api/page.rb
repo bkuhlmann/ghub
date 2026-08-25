@@ -53,7 +53,7 @@ module Ghub
 
       def navigation direction
         link = web_link.call(response.headers, root_uri: configuration.url).find do |link|
-          link.find_pair(key: /rel/, value: /#{direction}/)
+          link.find_pair(key: /rel/, value: %("#{direction}"))
         end
 
         link ? link.uri[/page=(?<page>\d+)/, :page].to_i : 0
