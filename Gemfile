@@ -6,6 +6,8 @@ source "https://rubygems.org"
 
 gemspec
 
+gem "rfc-web-link", path: "~/Engineering/OSS/rfc-web-link"
+
 group :quality do
   gem "caliber", "~> 0.90"
   gem "git-lint", "~> 11.0"
