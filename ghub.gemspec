@@ -30,7 +30,7 @@ Gem::Specification.new do |spec|
   spec.add_dependency "http", "~> 6.0"
   spec.add_dependency "infusible", "~> 5.0"
   spec.add_dependency "inspectable", "~> 1.0"
-  spec.add_dependency "pipeable", "~> 2.0"
+  spec.add_dependency "pipeable", "~> 2.4"
   spec.add_dependency "refinements", "~> 14.0"
   spec.add_dependency "rfc-web-link", "~> 0.1"
   spec.add_dependency "zeitwerk", "~> 2.8"
