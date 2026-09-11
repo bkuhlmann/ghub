@@ -25,7 +25,7 @@ Gem::Specification.new do |spec|
   spec.required_ruby_version = ">= 4.0"
 
   spec.add_dependency "containable", "~> 2.5"
-  spec.add_dependency "dry-monads", "~> 1.9"
+  spec.add_dependency "dry-monads", "~> 1.11"
   spec.add_dependency "dry-schema", "~> 1.15"
   spec.add_dependency "http", "~> 6.0"
   spec.add_dependency "infusible", "~> 5.0"
