@@ -9,3 +9,5 @@ detectors:
       - "Ghub::Endpoints::Branches::Signature::Root"
   LongParameterList:
     enabled: false
+  UnusedParameters:
+    enabled: false
