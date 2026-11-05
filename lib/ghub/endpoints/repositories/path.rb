@@ -8,11 +8,11 @@ module Ghub
     module Repositories
       # Dynamically builds API repository path sfor users or organizations.
       class Path
+        KINDS = %w[users orgs].freeze
+
         include Dry::Monads[:result]
 
         using Refinements::Array
-
-        KINDS = %w[users orgs].freeze
 
         def initialize kinds: KINDS
           @kinds = kinds
